@@ -1,0 +1,42 @@
+<div class="container">
+	<ol class="breadcrumb">
+	  <li><a href="/">Home</a></li>
+	  <li class="active"><%= @player.username %>'s Profile</li>
+	</ol>
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-default">
+		<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> <%= @player.username %>'s Profile</div>
+		<table class="table table-bordered">
+			<% if @player.username == current_player.username %>
+			<tr>
+				<td><span class="glyphicon glyphicon-envelope"></span> Email:</td>
+				<td><%= @player.email %></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td><span class="glyphicon glyphicon-star"></span> Rating:</td>
+				<td><%= @player.rating %></td>
+			</tr>
+			<tr>
+				<td><span class="glyphicon glyphicon-stats"></span> Skill level:</td>
+				<td><%= player_level %></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<%= link_to playerintro_path, :class => "btn btn-default" do %>
+						<span class='glyphicon glyphicon-arrow-left'></span> Back to lobby
+					<% end %>
+					<%= link_to games_path(owner: @player.username), method: :get, :class => "btn btn-primary" do %>
+					   <span class="glyphicon glyphicon-eye-open"></span> View games by <%= @player.username %>
+					<% end %>
+					<% if @player.username == current_player.username %>
+						<%= link_to edit_player_path(current_player), :class => "btn btn-success pull-right" do %>
+							<span class="glyphicon glyphicon-cog"></span> Settings
+						<% end %>
+					<% end %>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+</div>

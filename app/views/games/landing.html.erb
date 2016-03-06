@@ -1,0 +1,206 @@
+<link href='http://fonts.googleapis.com/css?family=IM+Fell+English+SC' rel='stylesheet' type='text/css'>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=IM+Fell+DW+Pica|Alike+Angular' rel='stylesheet' type='text/css'>
+<style type="text/css">
+  body {
+    background-color: #fff;
+  }
+
+  .jumbotron {
+    /*height: 550px;*/
+    background: url(<%= asset_path 'bg1.png' %>) no-repeat center center;
+    background-size: 100%;
+    margin-bottom: 0;
+  }
+  .jumbotron h1 {
+    font-family: 'IM Fell English SC', serif;
+    font-size: 5em;
+    padding-top: 50px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 50px;
+  }
+
+  .jumbotron p {
+    font-family: 'IM Fell DW Pica', serif;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .btn-success {
+    font-family: 'Alike Angular', serif; 
+    background-color: #759B69;
+    border: 1px solid #265218;
+    color: #fff;
+  }
+
+  .btn-success:hover, .btn-success:focus {
+    background-color: #567E4A;
+    border: 1px solid #265218;
+  }
+
+  .btn-success:active {
+    background-color: #567E4A;
+    border: 1px solid #265218;
+  }
+
+  #lore {
+    background-color: #EDF5EB;
+  }
+
+  .footer {
+    background-color: transparent;
+    color: gray;
+  }
+
+  .footer .container {
+    padding-bottom: 20px;
+  }
+
+  h2 { 
+    font-family: 'Alike Angular', serif;
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    line-height: 50px;
+  }
+  @media screen and (max-width: 570px) {
+    .jumbotron {
+      background-size: auto 100%;
+    }
+    .jumbotron h1 {
+      font-size: 3em;
+      letter-spacing: 20px;
+    }
+  }
+</style>
+<div id="title" class="jumbotron">
+  <h1 align="center">CELTIA</h1><br/>
+  <p align="center">The game of the Gods</p><br/><br/><br/>
+  <p align="center"><%= link_to "Play online now!", playerintro_path, :class => "btn btn-success btn-lg" %></p>
+</div>
+<div class="lore" id="lore">
+  <br/>
+  <div class="container">
+      <h2>Lore</h2><br/>
+        <div class="row">
+            <div class="col-md-3 col-md-push-9 text-center">
+                <img class="img-circle" src="<%= asset_path 'cauldron.png' %>" height="150" />
+            </div>
+            <div class="col-md-9 col-md-pull-3">
+                <p>
+                  For long ages the history and folk lore of the clans and their cultural traditions have been kept by the Seannaiches. For they alone have been the guardians of the secrets of the true, Inner Celtia. To them the lands held treasures among the old tales and divine magic that is in each and every one of us. Now as the new millennium enfolds in front of us mankind will be ill-fitted to embrace their awaiting destiny without the lost treasures of the human soul. The cauldron of Dragda, held by Morigu in the land of shadows, is without a doubt among the greatest of the treasures but no champion has arisen who could lay claim to it. No longer can such a quest be reserved for warriors, as time is running out any brave soul can try to take back the cauldron from Morigu.
+                  <p><strong>Good Luck</strong></p> Read the Full <%= link_to "Story here!", story_path %>
+                </p>
+            </div>
+        </div>
+      
+  </div>
+  <br/><br/>
+</div>
+    <div class="buy" id="buy">
+    <br/>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <h2>Buy now</h2>
+            <p>
+              Available from: <br/><a href="http://www.amazon.co.uk/Celtia-The-Original-Game-Gods/dp/B00HJ7WFM8/ref=sr_1_1?ie=UTF8&qid=1402481495&sr=8-1&keywords=celtia+board+game">Amazon UK</a><br/>
+              <a href="http://www.celtia.co/html/setsandxtras.html">Celtia Official site</a>
+            </p>
+          </div>  
+          <div class="col-md-4 col-sm-4">
+            <h2>Contact</h2>
+            <p>
+              Shadowland games LLP<br/>
+              Ardarroch Court<br/>
+              Laroch Beag<br/>
+              Ballachulish<br/>
+              Scotland<br/>
+              PH49 4LG<br/>
+              <a href="mailto:sales@celtia.co?Subject=Hello" target="_top">sales@celtia.co</a><br/>
+              0776672 85533
+            </p>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <h2>Credits</h2>
+            <p>Graham McKay<br/>
+            Bruce Scharlau<br/>
+            Megan Inch<br/>
+            Chris Wilson<br/>
+            Orinemia Ajulo<br/>
+            Colloque Tsui</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Login popup -->
+  <div class="modal fade" id="login-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Login</h4>
+        </div>
+        <%= form_tag sessions_path do %>
+        <div class="modal-body">
+          <div class="form-group">
+              <label for="email">Email</label>
+              <%= text_field_tag :email, params[:email], :class => "form-control", :placeholder => 'Email', :type => "email" %>
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <%= password_field_tag :password, nil, :class => "form-control", :placeholder => 'Password' %>
+          </div>
+              <%= check_box_tag :remember_me, 1, params[:remember_me], {checked: true} %>
+              <%= label_tag :remember_me, 'Stay signed in' %>
+              <span class="pull-right"><%= link_to "Forgot?", new_password_reset_path %></span>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <%= submit_tag "Log In", :class => "btn btn-success" %>
+              <a class="pull-left" href="#" data-toggle="modal" data-target="#register-form" data-dismiss="modal">New user? Register now!</a>
+          </div> 
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- Register popup -->
+  <div class="modal fade" id="register-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Register</h4>
+        </div>
+        <%= form_for @player do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= f.label :'username' %>
+            <%= f.text_field :username, :class => "form-control", :placeholder => 'Username' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :'email' %>
+            <%= f.text_field :email, :class => "form-control", :placeholder => 'Email', :type => "email" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :'password' %>
+            <%= f.password_field :password, :class => "form-control", :placeholder => 'Password' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :'password_confirmation' %>
+            <%= f.password_field :password_confirmation, :class => "form-control", :placeholder => 'Password confirmation' %>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= submit_tag "Register", :class => "btn btn-success" %>
+            <a class="pull-left" href="#" data-toggle="modal" data-target="#login-form" data-dismiss="modal">Already registered?</a>
+        </div> 
+        <% end %>
+      </div>
+    </div>
+  </div>

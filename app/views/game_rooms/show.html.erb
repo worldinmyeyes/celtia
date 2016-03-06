@@ -1,0 +1,122 @@
+<style type="text/css">
+	.header a {
+	    color:#ffffff;
+	    /*font-size:10px;*/
+	    text-decoration: none;
+	    opacity: 0.7;
+	    /*transition:opacity 0.2s;*/
+	    &:hover {
+	    opacity: 1;
+	    color: #fff;
+	    text-decoration: none;
+	    }
+	}
+
+	.content {
+		display: block;
+		position: relative;
+		float: left;
+	}
+
+	body {
+		font-family: 'Open Sans', sans-serif !important;
+	  font-weight: 400;
+	  text-rendering: optimizelegibility;
+	  background-color: #EDF5EB; 
+	}
+
+	ul {
+		list-style: none;
+		-webkit-padding-start: 0;
+		-moz-padding-start: 0;
+		padding-start: 0;
+	}
+	.btn {
+		opacity: 1;
+	}
+</style>
+<div class="container">
+	<ol class="breadcrumb">
+	  <li><a href="/">Home</a></li>
+	  <li><%= link_to "Lobby", playerintro_path %></li>
+	  <li class="active"><%= @game_room.room_name %></li>
+	</ol>
+	<h1><%= @game_room.room_name %><span class="small"> － <%= @game_room.player.username %></span></h1>
+	<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">Room details</div>
+			<table class="table">
+				<tr>
+					<td>Name:</td>
+					<td><strong><%= @game_room.room_name %></strong></td>
+				</tr>
+				<tr>
+					<td>Owner:</td>
+					<td><strong><%= link_to @game_room.player.username, @game_room.player, :data => {:toggle => "tooltip", :placement => "top"}, :title => "View player's profile", :class => "owner" %></strong></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td><strong><%= @game_room.profile %></strong></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<%= button_to playerintro_path, method: :get, :class => "btn btn-default" do %>
+						    <span class='glyphicon glyphicon-arrow-left'></span> Back to lobby
+						<% end %>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">Action</strong></div>
+			<div class="panel-body">
+				<p><strong>You can...</strong></p>
+				<% if @game_room.owned_by? current_player %>
+				    <%= render 'selection' %>
+				<% else %>
+				    <strong>View <%= link_to @game_room.player.username, @game_room.player, :data => {:toggle => "tooltip", :placement => "top"}, :title => "View player's profile", :class => "owner" %>'s Games</strong><br/><br/>
+				    <%= link_to games_path(owner: @game_room.player.username), method: :get, :class => "btn btn-primary" do %>
+					   <span class="glyphicon glyphicon-eye-open"></span> View current games by <%= @game_room.player.username %>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+	</div>
+	<%= form_for @game_room do |f| %>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Edit room details</h4>
+	      </div>
+	      <div class="modal-body">
+			    
+			    <div class = "form-group">
+                    <%= f.label :'Type a room name' %>
+                    <%= f.text_field :room_name, :placeholder => "Name of the room", :class => "form-control" %>
+                </div>
+                <div class = "form-group">
+                    <%= f.label :'Write a short profile' %>
+                    <%= f.text_area :profile, :placeholder => "Description", :class => "form-control", :rows => "5" %>
+                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <%= f.submit 'Update', :class => "btn btn-success" %>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<% end %>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.owner').tooltip();
+	});
+</script>

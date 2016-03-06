@@ -1,0 +1,646 @@
+.indicator.stuck {
+    position: fixed;
+    top: 20px;
+    display: block;
+    z-index: 9999;
+    left: 20px;
+    width: 120px;
+}
+
+@media screen and (max-width: 1110px) {
+    .header {
+        width: 1110px;
+    }
+}
+#user_header {
+    display: inline-block;
+    position: relative;
+    float: right;
+}
+.navitem {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin: 10px;
+    color: #fff;
+}
+.footer {
+    background-color: transparent;
+    color: gray;
+    text-align: center;
+  }
+
+  .footer .container {
+    padding-bottom: 20px;
+  }
+
+.main {
+    margin: 0 auto;
+    width: 1110px;
+    /*height: 100%;*/
+    /*background-image: url("../images/marble.png");*/
+	background-repeat: no-repeat;
+    background-color: #f9f9f9;
+    clear: both;
+}
+
+.main2 {
+    margin: 0 auto;
+    width: 960px;
+    /*height: 100%;*/
+    background-color: black;
+}
+
+.player {
+    background-color: #6F7FA3;
+    display: table-cell !important;
+    min-height: 1100px;
+}
+
+#shadow {
+	margin-top: 150px;
+}
+.boardcentral {
+    margin: 0 auto;
+    width: 750px;
+    height: 850px;
+    float: left;
+    /*margin-left: 20px;*/
+    /*margin-right: 10px;*/
+}
+
+.playerright {
+    margin: 0 auto;
+    width: 163px;
+    height: 930px;
+    float: left;
+    background-color: #A58E6E;
+    margin-left: 5px;
+}
+
+#out {
+	font-size: 10px;
+}
+
+.mainpage {
+	margin: 0 auto;
+    background-color: black;
+    width:950px;
+    height: 665px;
+    background-image: url("../images/cover.png");
+}
+
+.mainpagetext {
+	margin: 0 auto;
+    font-size: 40pt;
+    color: white;
+    background-color: black;
+    margin-bottom: 20px;
+}
+
+.left{
+    position: relative;
+    width: 150px;
+    height:1000px;
+    float: left;
+    background-color: blue;
+}
+
+
+a {
+    color:#43942A;
+    /*font-size:10px;*/
+    text-decoration: none;
+    opacity: 0.7;
+    /*transition:opacity 0.2s;*/
+}
+
+a:hover {
+    color:#43942A;
+    text-decoration: none;
+    opacity: 1;
+}
+
+.board {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.centre {
+    /*margin: 0 auto;*/
+    /*position: relative;*/
+    z-index: 10;
+    /*left: 0px;*/
+    /*top: 388px;*/
+    width: 50px;
+    height: 45px;
+}
+
+#chess_board { border:5px solid #333; background-color: #8eb6b6; margin: 0 auto;}
+    #chess_board td {
+        box-shadow: 0 0 0 1px #000;
+        -moz-box-shadow: 0 0 0 1px #000;
+        -webkit-box-shadow: 0 0 0 1px #000;
+        text-align: center;
+        vertical-align: middle;
+        width: 45px;
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    #chess_board tr {
+    height:45px;
+}
+
+.highlighted {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 50px #fa9300;
+}
+
+.td-highlighted {
+    background-color: #000;
+}
+
+#centresquare { border:3px solid #000; z-index: -9; border-radius: 10px; 
+    background: url(<%= asset_path 'spells/cauldron.png' %>) center no-repeat;
+        background-size: 100%;
+        background-color: #8eb6b6;
+
+}
+    #centresquare td {
+        /*background: #8eb6b6;*/
+        text-align: center;
+        vertical-align: middle;
+        width: 45px;
+        background-position:center;
+        box-shadow: none;
+            }
+    #centresquare tr {
+    height:45px;
+}
+
+/*div#drag td{
+
+    height: 40px;
+    text-align: center;
+    font-size: 6pt;
+    padding: 2px;
+    overflow: no-content;
+    z-index: 200;
+}*/
+
+.drag{
+    margin: auto;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+}
+
+
+.spellscont{
+	text-align:center;
+	margin: 0 auto;
+	margin-left: 3px;
+	margin-bottom: 30px;
+	margin-top: 25px;
+	height: 90px;
+	width: auto;
+	background-color: #ebd4b7;
+	padding-left: 10px;
+	padding-top: 10px;
+	margin-bottom: 30px;
+	border:4px solid #333;
+}
+
+.spellleft{
+	width: 150px;
+	float: left;
+}
+
+.spellright{
+	width: 550px;
+	float: right;
+}
+
+.newbutton {
+	font-size: 20px;
+}
+
+ul.tabs {
+ margin: 0;
+ padding: 0;
+ float: left;
+ list-style: none;
+ height: 32px;
+ border-bottom: 0px solid #000;
+ border-left: 1px solid #000;
+ width: 100%;
+}
+
+ul.tabs li {
+ float: left;
+ margin: 0;
+ padding: 0;
+ height: 31px; 
+ line-height: 31px; 
+ border: 1px solid #000;
+ border-left: none;
+ margin-bottom: -1px; 
+ overflow: hidden;
+ position: relative;
+ background: #8eb6b6;
+}
+
+ul.tabs li a {
+ text-decoration: none;
+ color: #000;
+ display: block;
+ font-size: 0.9em;
+ padding: 0 20px;
+ outline: none;
+}
+ul.tabs li a:hover {
+ background: #ccc;
+}
+html ul.tabs li.active, html ul.tabs li.active a:hover  {
+ background: #A58E6E;
+ border-bottom: 1px solid #A58E6E; 
+}
+
+.tab_container {
+ border: 1px solid #000;
+ border-top: none;
+ overflow: hidden;
+ clear: both;
+ float: left; 
+ background: #8eb6b6;
+}
+
+.tab_content {
+ padding: 0px;
+ font-size: 1.2em;
+}
+
+#redshield, #redcauldron, #redspellhammer, #redclub, #redharp, #redmist, #redshapeshift, #redpossession, #redflight {
+	background: red;
+}
+
+#whiteshield, #whitecauldron, #whitespellhammer, #whiteclub, #whiteharp, #whitemist, #whiteshapeshift, #whitepossession, #whiteflight {
+	background: white;
+}
+
+#blackshield, #blackcauldron, #blackspellhammer, #blackclub, #blackharp, #blackmist, #blackshapeshift, #blackpossession, #blackflight {
+	background: black;
+	color: white;
+}
+
+#greenshield, #greencauldron, #greenspellhammer, #greenclub, #greenharp, #greenmist, #greenshapeshift, #greenpossession, #greenflight {
+	background: green;
+}
+
+.promote_button {
+    background-size: 100%;
+    background-repeat:no-repeat;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+}
+
+
+#bansidh_button {
+    @extend .promote_button;
+    background-image: url(<%= asset_path 'white/Bansidh.png' %>);
+}
+#clansman_button {
+    @extend .promote_button;
+    background-image: url(<%= asset_path 'white/clansman.png' %>);
+}
+#champion_button {
+    @extend .promote_button;
+    background-image: url(<%= asset_path 'white/champion.png' %>);
+}
+#leapingchieftain_button {
+    @extend .promote_button;
+    background-image: url(<%= asset_path 'white/leaping.png' %>);
+}
+#squarechieftain_button {
+    @extend .promote_button;
+    background-image: url(<%= asset_path 'white/square.png' %>);
+}
+#diagonalchieftain_button {
+	@extend .promote_button;
+  background-image: url("../assets/white/diagonal.png");
+}
+
+#cauldron_button_0, #cauldron_button_1, #cauldron_button_2, #cauldron_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/cauldron.png");
+}
+#shapeshift_button_0, #shapeshift_button_1, #shapeshift_button_2, #shapeshift_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/shapeshift.png");
+}
+
+#possess_button_0, #possess_button_1, #possess_button_2, #possess_button_3  {
+  @extend .promote_button;
+  background-image: url("../assets/spells/possession.png");
+}
+
+#flight_button_0, #flight_button_1, #flight_button_2, #flight_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/flight.png");
+}
+
+#freeze_button_0, #freeze_button_1, #freeze_button_2, #freeze_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/harp.png");
+}
+
+#bolt_button_0, #bolt_button_1, #bolt_button_2, #bolt_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/club.png");
+}
+
+#bolt_button_res {
+  @extend .promote_button;
+  background-image: url("../assets/spells/club_res.png");
+}
+
+#mist_button_0, #mist_button_1, #mist_button_2, #mist_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/mist.png");
+}
+
+#hammer_button_0, #hammer_button_1, #hammer_button_2, #hammer_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/spellhammer.png");
+}
+
+#shield_button_0, #shield_button_1, #shield_button_2, #shield_button_3 {
+  @extend .promote_button;
+  background-image: url("../assets/spells/shield.png");
+}
+.promotion {
+    text-align: center;
+  background: white;
+  z-index: 999;
+}
+
+.spellarea {
+ box-shadow: none !important;
+ background-size: 100% !important;
+ background: #6DA1A1;
+} 
+
+
+#message_div {
+  height: 270px;
+  overflow: scroll;
+}
+
+#message_body {
+  width: 145px;
+}
+
+.error {
+    font-size: 25pt;
+    color: white;
+}
+
+.spellscont {
+  button {
+    float: left;
+  }
+}
+
+#games_table {
+	color: white;
+}
+
+#usage {
+  color: white;
+}
+
+.vertical-spells {
+    /*width: 55px;*/
+margin-top: 160px;
+/*vertical-align: middle;*/
+/*height: 744px;*/
+}
+
+.horizontal-spells {
+    text-align: center;
+    /*width: 640px;*/
+}
+
+.indicator {
+    position: relative;
+    display: inline-block;
+    float: left;
+    margin-bottom: 40px;
+    text-align: center;
+    width: 100%;
+}
+
+.vertical-spells button {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.horizontal-spells button {
+    margin-right: 5px !important;
+    margin-left: 5px !important;
+}
+
+.vertical-spells button, .horizontal-spells button, .zap_window button, .cauldron_window button {
+    border-radius: 20px;
+    border:0;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+    border: 1px solid #fff;
+    box-shadow: 2px 2px 0 #bbb;
+}
+.vertical-spells button, .horizontal-spells button {
+    opacity: 1;
+}
+.vertical-spells button:active, .horizontal-spells button:active {
+    border: 1px solid #000;
+}
+
+.vertical-spells button:disabled, .horizontal-spells button:disabled {
+    opacity: 0.5;
+}
+
+.vertical-spells button:disabled:hover, .horizontal-spells button:disabled:hover {
+    opacity: 0.5;
+}
+
+#error {
+    display: block;
+    position: fixed;
+    width: 100px;
+    height: 50px;
+    display: none;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -25px;
+    background-color: #f7f7f7;
+    text-align: center;
+    z-index: 9999;
+}
+
+.promotion_window {
+    width: 600px;
+    height: 150px;
+    position: fixed;
+    display: none;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -75px;
+    z-index: 999;
+    text-align: center;
+    border: 1px solid #000;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+}
+.promotion_window p {
+    color: #000;
+}
+.promotion_window #closePromotion {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.promotion_window button {
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.promotion_window button:hover {
+    opacity: 1;
+}
+.zap_window, .cauldron_window {
+    width: 600px;
+    height: 150px;
+    position: fixed;
+    display: none;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -75px;
+    z-index: 999;
+    text-align: center;
+    border: 1px solid #000;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+}
+.zap_window p, .cauldron_window p {
+    color: #000;
+}
+.zap_window #closezap {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.zap_window button {
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.zap_window button:hover, .cauldron_window button:hover {
+    opacity: 1;
+}
+
+#logo {
+    width: 100%;
+}
+
+.overlay {
+    display: table;
+  position: fixed;
+  /*display: none;*/
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  filter:alpha(opacity=50);
+  -moz-opacity:0.5;
+  -webkit-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 1;
+  z-index: 900;
+  cursor: pointer;
+}
+
+.loading {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 2em;
+}
+
+.popbox {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    width: 300px;
+    /*padding: 10px;
+    background: black;
+    color: #777;
+    font-size: 10pt;
+    border: 1px solid #4D4F53;
+    margin: 0px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
+    box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);*/
+}
+
+#accordion .panel-heading {
+    color:  #E3E5DD;
+    font-size: 18px;
+    /*font-color: solid black;*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*margin: -10px 0px 8px -10px;*/
+    /*padding: 5px 10px;*/
+    /*border-radius: 5px;*/
+    /*background-color: #fa9300;*/
+    background-image: -moz-linear-gradient(top,  #0066CC 0%, #dc621e 100%); /* FF3.6+ */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0066CC), color-stop(100%,#dc621e)); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top,  #0066CC 0%,#dc621e 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -o-linear-gradient(top,  #0066CC 0%,#dc621e 100%); /* Opera 11.10+ */
+    background-image: -ms-linear-gradient(top,  #0066CC 0%,#dc621e 100%); /* IE10+ */
+    background-image: linear-gradient(to bottom,  #0066CC 0%,#dc621e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0066CC', endColorstr='#dc621e',GradientType=0 ); /* IE6-9 */
+}
+
+#accordion .panel-body {
+    background-color: black;
+    color: white;
+}
+
+#accordion .panel {
+    border-color: black;
+}
+
+.dismiss-btn {
+    color: #000;
+}
+
+.game-footer {
+    background-color: gray;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+

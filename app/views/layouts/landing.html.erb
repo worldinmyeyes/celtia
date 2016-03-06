@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Celtia | The game of the Gods</title>
+  <%= include_gon(:watch => true) %>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <%= stylesheet_link_tag    "application", media: "all"%>
+  <%= javascript_include_tag "application"%>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet prefetch' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=IM+Fell+English+SC' rel='stylesheet' type='text/css'>
+  <!-- <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.0.0/jasmine_favicon.png"> -->
+<!--   <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.0.0/jasmine.css">
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="jasmine/lib/jasmine-2.0.0/boot.js"></script> -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <%= csrf_meta_tags %>
+  <style type="text/css">
+    .navbar>.container .navbar-brand {
+      font-family: 'IM Fell English SC', serif !important;
+    }
+  </style>
+</head>
+<body class="clearfix" id="top">
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand to-top" href="/#top">Celtia</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-left" role="tablist">
+          <li><%= link_to "Lobby", playerintro_path %></li>
+          <li><%= link_to "Story", story_path %></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" role="tablist">
+        <% if current_player %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_player.username %> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><%= link_to current_player do %><span class="glyphicon glyphicon-user"></span> Profile<% end %></li>
+              <li><%= link_to session_path("current"), method: "delete" do %><span class="glyphicon glyphicon-log-out"></span> Log out<% end %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li><a href="#" data-toggle="modal" data-target="#login-form">Login</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#register-form">Register</a></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <% flash.each do |name, msg| -%>
+    <div class="alert alert-<%= name %> fade in text-center">
+      <%= msg %> <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+  <% end %>
+  <%= yield %>
+
+  <div class="footer">
+    <div class="container">
+      <hr>
+      &copy; Celtia 2014
+    </div>
+  </div>
+</body>
+</html>

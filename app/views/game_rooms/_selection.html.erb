@@ -1,0 +1,34 @@
+<button class="btn btn-success" data-toggle="modal" data-target="#myModal">
+	<span class="glyphicon glyphicon-edit"></span> Edit Room
+</button><br/><br/>
+<%= link_to games_path(owner: @game_room.player.username), method: :get, :class => "btn btn-primary" do %>
+   <span class="glyphicon glyphicon-eye-open"></span> View current games by <%= @game_room.player.username %>
+<% end %>
+<br/><br/>
+<strong>Or Create Games</strong>
+<br/><br/>
+<div class="row">
+
+<div class="col-md-4 col-sm-4 text-center">
+<%= link_to image_tag("2player.png", :width => "90%", :alt => "2 Players"), games_path(num_players: 2, owner: current_player.username), method: :post %>
+<br/><br/>
+<%= button_to games_path(num_players: 2, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+    2 players
+<% end %>
+</div>
+<div class="col-md-4 col-sm-4 text-center">
+<%= link_to image_tag("4player.png", :width => "90%", :alt => "3 Players"), games_path(num_players: 3, owner: current_player.username), method: :post %>
+<br/><br/>
+<%= button_to games_path(num_players: 3, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+    3 players
+<% end %>
+</div>
+<div class="col-md-4 col-sm-4 text-center">
+<%= link_to image_tag("4player.png", :width => "90%", :alt => "4 Players"), games_path(num_players: 4, owner: current_player.username), method: :post %>
+<br/><br/>
+<%= button_to games_path(num_players: 4, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+    4 players
+<% end %>
+</div>
+</div>
+

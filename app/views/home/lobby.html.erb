@@ -1,0 +1,148 @@
+<head>
+    <style type = "text/css">
+       body {
+          width: 100%;
+          background: linear-gradient(#e7e7e6, #fdfdfd, #eaeae9, #e9e9e8, #ffffff);
+        }
+
+        #content {
+            max-width: 900px;
+            margin: 5px auto;
+            background: linear-gradient(#e7e7e6, #fdfdfd, #eaeae9, #e9e9e8, #ffffff);
+        }
+
+        #container1 {
+            /*border: 1px solid red;*/
+            position:relative;
+            float:left;
+            width: 45%;
+        }
+
+        .first {
+           margin:5px;
+        }
+
+        #user {
+        	border: 1px solid black;
+        	width:40%;  
+        	/*float: left;*/      
+            position:relative;
+            margin-bottom: 20px;
+        }
+
+        #user h3, #players h3, #chatbox h3 {
+        	text-align: center;
+        	margin-bottom: 1px solid black;
+        }
+
+        #players {
+        	border: 1px solid black;
+        	float:left;
+        	width: 45%;
+        	position: relative;
+        	margin-top: 150px;
+        }
+
+        #container {
+        	border: 1px solid black;
+        	float:right;
+        	width: 50%;
+        	position:relative;
+        }
+
+        #container .playerbutton1 {
+        	margin: 5px
+        }
+
+        #playerspaces {
+        	border: 1px solid black;
+        }
+
+        #playerspaces h3 {
+        	text-align: center;
+        }
+
+        #playernames {
+        	/*border: 1px solid red;*/
+        	position:relative;
+        	float:left;
+        	width: 40%;
+        	padding-top: 40px;
+        }
+
+        #playerbuttons {
+        	/*border: 1px solid red;*/
+        	position:relative;
+        	float:right;
+        	padding-top: 35px;
+        	width: 40%;
+        }
+
+        #playerbuttons ul li {
+        	list-style-type: none;
+        	margin-left: 50px;
+        }
+
+        #chatbox, #realchat {
+        	border-top: 1px solid black;
+            /*border-bottom: 1px solid black;*/
+        	position:relative;
+        	clear:both;
+        }
+
+        #second {
+            float: right;
+        }
+    </style>
+    <title>The Lobby</title>
+</head>
+<body>
+	<div id = "content">
+	   <div id = "container1">
+		   <div id = "user">
+		   	   <h3><%= player.username %></h3>
+			   <ul>
+				  <li><label>Player Ranking:</label><%= player.ranking %></li>
+				  <li><label>Player win/loss ratio:</label><%= player.win_loss %></li>
+		       </ul>
+		    </div>
+		    <div id = "players">
+		       <h3>Players Online</h3>
+			   <ul>
+		    	 <% @players.each do |player| %>
+		    	 <li><%= player.username %></li>
+		       </ul>
+		    </div>
+		</div>
+		<div id = "container">
+		  <button class = "first">Tutorial</button>
+		  <button class = "first">Create Game</button>
+		    <div id = "playerspaces">
+		    	<h3>Game Rooms</h3>
+		        <div id = "playernames">
+		           <ul>
+		           	 <% @game_rooms.each do |game_room| %>
+		    	     <li><%= game_room.title %></li>
+		    	   </ul>
+		        </div>
+		        <div id = "playerbuttons">
+		   	       <ul>
+		   	       	 <% @game_rooms.each do |game_room| %>
+		   	  	     <li>link_to "Show Room"</li>
+		           </ul>
+		        </div>
+		    </div>
+		    <div id = "chatbox">
+		          <h3>Global Chat</h3>
+		          <ul>
+		             <li>Player 1: "Hey who killed my queen?"</li>
+		    	     <li>Player 2: "You are using that spell all wrong"</li>
+		    	     <li>Player 3: "What happened in that other game last week?"</li>
+		    	     <li>Admin: "Simon has been deleted because he was cheating"</li>
+		          </ul>
+                  <div id = "realchat"><p>username >></p></div>
+		          <button id = "second">Submit</button>
+		    </div>
+            <div><a class="login-btn" href="index.html">Back to Home Page</a></div>
+        </div>
+   </div>

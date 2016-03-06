@@ -1,0 +1,471 @@
+<style type="text/css">
+  .color {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .btn-black {
+    color: #fff;
+    background-color: #333;
+    border-color: #000;
+  }
+  .btn-black:hover, .btn-black:active {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+  }
+  .footer {
+    display: none;
+  }
+  .row {
+    background-color: #fff;
+  }
+  body {
+    background-color: black;
+  }
+  .container-non-responsive {
+    /* Margin/padding copied from Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    /* Set width to your desired site width */
+    width: 1170px;
+  }
+</style>
+<%= javascript_include_tag "jquery-impromptu.min.js" %>
+<script>
+  jQuery().ready(function(){
+        // stay closed until I say so
+        jQuery('#accordion').accordion({
+            active: false,
+            autoheight: false,
+            collapsible: true,
+            alwaysOpen: false
+        });
+        
+});
+  </script>
+<script>
+  function tutorial() {
+    var tourSubmitFunc = function(e,v,m,f){
+      if(v === -1){
+        $.prompt.prevState();
+        return false;
+      }
+      else if(v === 1){
+        $.prompt.nextState();
+        return false;
+      }
+    },
+    tourStates = [
+      {
+        title: 'Welcome',
+        html: 'Looks like this is your first play, ready to take a quick tour of Celtia?',
+        buttons: { Next: 1 },
+        focus: 0,
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Turn indicator',
+        html: 'This indicates whose turn it is.',
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '.indicator', x: 200, y: 45, width: 300, arrow: 'lt' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Pieces',
+        html: 'These are your pieces.',
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '#_14_7', x: 80, y: 10, width: 300, arrow: 'lt' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: "Spells",
+        html: 'These are your spells but you can only activate them if you have collected them on the board.',
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '#myspells', x: -250, y: 10, width: 300, arrow: 'rt' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Chat box',
+        html: "You can chat here, for private message just simply click on players name or start your message with the player's name.",
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '#sendbody', x: 300, y: -110, width: 400, arrow: 'lb' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Colour',
+        html: 'Choose your color here.',
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '.btn-black', x: 200, y: 0, width: 400, arrow: 'lt' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Learn More',
+        html: 'You can learm more here.',
+        buttons: { Prev: -1, Next: 1 },
+        focus: 1,
+        position: { container: '#accordion', x: 200, y: 0, width: 275, arrow: 'lt' },
+        submit: tourSubmitFunc
+      },
+      {
+        title: 'Watch this again',
+        html: 'In the future, if you want to watch this again, just click here.',
+        buttons: { Done: 2 },
+        focus: 0,
+        position: { container: '#tutorial', x: 200, y: 0, width: 275, arrow: 'lt' },
+        submit: tourSubmitFunc
+      }
+    ];
+    $.prompt(tourStates);
+  }
+  $(document).ready(function() {
+    $("#closePromotion").click(function() {
+          $(".promotion_window").fadeOut();
+          $(".overlay").fadeOut();
+      });
+    $(".overlay").click(function() {
+          $(".zap_window").fadeOut();
+          $(".cauldron_window").fadeOut();
+          $(".promotion_window").fadeOut();
+          $(".overlay").fadeOut();
+      });
+    // To show tutorial if its players first play
+    <% if current_player.firstplay == true %>
+      $( '#tutorial' ).click ();
+      <% current_player.firstplay = false %>
+      <% current_player.save %>
+    <% end %>
+
+    $(document).on("click", ".sender", function(e) {
+      document.getElementById("sendbody").value = "@"+$(this).html()+" ";
+      $('#sendbody').focus();
+    });
+  });
+  
+</script>
+<script>
+$(function() {
+    var moveLeft = 0;
+    var moveDown = 0;
+    $('a.popper').hover(function(e) {
+   
+        var target = '#' + ($(this).attr('data-popbox'));
+         
+        $(target).show();
+        moveLeft = $(this).outerWidth();
+        moveDown = ($(target).outerHeight() / 2);
+    }, function() {
+        var target = '#' + ($(this).attr('data-popbox'));
+        $(target).hide();
+    });
+
+  $( document ).click(function() {
+    $( "#toggle" ).effect( "still" );
+  });
+    $('a.popper').mousemove(function(e) {
+        var target = '#' + ($(this).attr('data-popbox'));
+
+        leftD = e.pageX + parseInt(moveLeft)-100;
+        maxRight = leftD + $(target).outerWidth();
+        windowLeft = $(window).width() - 40;
+        windowRight = 0;
+        maxLeft = e.pageX - (parseInt(moveLeft) + $(target).outerWidth() + 20);
+         
+        if(maxRight > windowLeft && maxLeft > windowRight)
+        {
+            leftD = maxLeft;
+        }
+     
+        topD = e.pageY - parseInt(moveDown);
+        maxBottom = parseInt(e.pageY + parseInt(moveDown) + 20);
+        windowBottom = parseInt(parseInt($(document).scrollTop()) + parseInt($(window).height()));
+        maxTop = topD;
+        windowTop = parseInt($(document).scrollTop());
+        if(maxBottom > windowBottom)
+        {
+            topD = windowBottom - $(target).outerHeight() - 20;
+        } else if(maxTop < windowTop){
+            topD = windowTop + 20;
+        }
+     
+        $(target).css('top', topD).css('left', leftD);
+     
+     
+    });
+ 
+});
+</script>
+
+<%= subscribe_to "/games/#{@game.id}" %>
+<div class="overlay"><p class='loading'>LOADING...<br/><span class="small">Refresh if it takes more than 1 minute</span></p></div>
+  <div class="container-non-responsive">
+    <div class="row">
+      <div class="col-xs-2 player">
+          <br/>
+          <%= link_to games_path(owner: @game.owner), :class => "btn btn-default color", method: :get do %>
+            <span class='glyphicon glyphicon-arrow-left'></span> Back to game list
+          <% end %>
+          <br/><br/>
+              <div class ="indicator player2"><%= image_tag("../images/Turn_black.png", :alt => "Celtia", :size => "120x120", :id => "turn_indicator") %></div> 
+          <br/>
+          <br/>
+          <button id="tutorial" onclick="tutorial()" class="btn btn-success tutorial-style color">Tutorial</button>
+          
+
+          <div>
+            <h3>Players</h3>
+            <div><h4>Red:   <%= @game.red %></h4></div>
+            <div><h4>White: <%= @game.white %></h4></div>
+            <div><h4>Green: <%= @game.green %></h4></div>
+            <div><h4>Black: <%= @game.black %></h4></div>
+          </div>
+          <h3>Guide</h3>
+                    
+          <div id="accordion">
+            <center><h3><a href="#" style="text-decoration:none;">Rules of Combat</a></h3></center>
+            <div style="padding:10px;">
+              <h4 style="font-style:italic;">Hover over an item to see</h4>
+              <a href="#" class="popper" data-popbox="pop11"><li>To Start</li></a>
+              <a href="#" class="popper" data-popbox="pop12"><li>Two Player Games</li></a>
+              <a href="#" class="popper" data-popbox="pop13"><li>Three Player Games</li></a>
+              <a href="#" class="popper" data-popbox="pop14"><li>Four Player Games</li></a>
+              <a href="#" class="popper" data-popbox="pop15"><li>How To Win</li></a>
+              <a href="#" class="popper" data-popbox="pop16"><li>How To Use A Spell</li></a>
+               <a href="#" class="popper" data-popbox="pop19"><li>When A Player Dies</li></a>
+              <div id="pop11" class="popbox panel panel-default">
+                <div class="panel-heading">To Start</div>
+                <div class="panel-body">
+                  <p>Red moves first and play progresses clockwise</p>
+                </div>
+              </div>
+                <div id="pop12" class="popbox panel panel-default">
+                <div class="panel-heading">Two Player Games</div>
+                <div class="panel-body">
+                  <p>Only one Seannaiche is permittable per player if playing with two players. Here there are two colours of spell available to each player but if one Banshee is lost, its magic is also unusable until a Banshee is regained. The game is fast and fierce.</p>
+                </div>
+              </div>
+                <div id="pop13" class="popbox panel panel-default">
+                <div class="panel-heading">Three Player Games</div>
+                <div class="panel-body">
+                  <p>In three play, one force is allotted to each, and the forth becomes the mercenary side, once more open to use by any player at their turn instead of using their own pieces if wished. Mercenary forces are unable to gather or use Magic and pawns simply vanish if put into the Cauldron.</p>
+                </div>
+              </div>
+                <div id="pop14" class="popbox panel panel-default">
+                <div class="panel-heading">Four Player Games</div>
+                <div class="panel-body">
+                  <p>The four player game is the best for beginners and may be played as individuals or pairs, which may be neighbours or opposites. The four player game is recommended for beginners and is usually played as individuals, though neighbouring or opposing pairs also work well.</p>
+                </div>
+              </div>
+                <div id="pop15" class="popbox panel panel-default">
+                <div class="panel-heading">How To Win</div>
+                <div class="panel-body">
+                  <p>By capturing the opposing teams Seannaiche or by getting to the cauldron and back with your Seannaiche. </p>
+                </div>
+              </div>
+               <div id="pop19" class="popbox panel panel-default">
+                <div class="panel-heading">When A Player Dies</div>
+                <div class="panel-body">
+                  <p>In a multiplayer game if someone's Seannaiche is taken then all their pieces become mercenaries who now belong to the player who beat them. </p>
+                </div>
+              </div>
+              <div id="pop16" class="popbox panel panel-default">
+                <div class="panel-heading">To use a spell</div>
+                <div class="panel-body">
+                  <p>A Banshee or a Seannaiche can obtain spells by visiting a board square with the symbol of the required spell. For the Banshee to cast a spell it must be located on their temple square;  or for the Seannaiche to cast a spell it must be on the cauldron square. A spell constitutes one move or can be issued before a move. More than one spell may be combined where desired but it is not permitted to remain on a spell square and keep using the retrieving token. </p>
+                </div>
+              </div>
+            </div>
+
+            <center><h3><a href="#" style="text-decoration:none;">The Pieces</a></h3></center>
+            <div style="padding:10px;">
+              <h4 style="font-style:italic;">Hover over an item to see</h4>
+              <a href="#" class="popper" data-popbox="pop1"><li>Seannaiche</li></a>
+              <a href="#" class="popper" data-popbox="pop2"><li>Banshee</li></a> 
+              <a href="#" class="popper" data-popbox="pop3"><li>Diagonal Chieftain</li></a> 
+              <a href="#" class="popper" data-popbox="pop4"><li>Leaping Chieftain</li></a> 
+              <a href="#" class="popper" data-popbox="pop5"><li>Square Chieftain</li></a> 
+              <a href="#" class="popper" data-popbox="pop6"><li>Champion</li></a> 
+              <a href="#" class="popper" data-popbox="pop7"><li>Clansmen</li></a> 
+              <div id="pop1" class="popbox panel panel-default">
+                <div class="panel-heading">Seannaiche</div>
+                <div class="panel-body">
+                  <p>They move only one square at a time, but may take figures in all directions. If the Seannaiche is lost your game is over. The Seannaiche may also collect any spell which you have already spent by moving onto a board square marked with the corresponding symbol.</p>
+                </div>
+              </div>
+              <div id="pop2" class="popbox panel panel-default">
+                  <div class="panel-heading">Banshee</div>
+                  <div class="panel-body">
+                    <p>The Banshees have the ability to move as any of the three different chieftains. They can also move out of the area of normal play, using their temple squares at the board corners. This they may reach to and from by means of their original start squares or diagonally from the main play area. When in the temple they may cast spells, which like the Seannaiche they may collect.</p>
+                  </div>
+              </div>
+              <div id="pop3" class="popbox panel panel-default">
+                  <div class="panel-heading">Diagonal Chieftain</div>
+                  <div class="panel-body">
+                    <p>This figure may move as far as it is unimpeded but using the diagonal lines.</p>
+                  </div>
+              </div>
+              <div id="pop4" class="popbox panel panel-default">
+                  <div class="panel-heading">Leaping Chieftain</div>
+                  <div class="panel-body">
+                    <p>This figure may move two squares vertically or horizontally and then one to the left or right. It may leap over obstructions but only captures a figure on the land square where it lands.</p>
+                  </div>
+              </div>
+              <div id="pop5" class="popbox panel panel-default">
+                  <div class="panel-heading">Square Chieftain</div>
+                  <div class="panel-body">
+                    <p>This figure may move on a horizontal or vertical line as far as it is unimpeded. It may take any desired opposing figure at the end of such a line if it wishes by dispossessing it of that square.</p>
+                  </div>
+              </div>
+              <div id="pop6" class="popbox panel panel-default">
+                  <div class="panel-heading">Champion</div>
+                  <div class="panel-body">
+                    <p>This type of figure combines the moving ability of both square and diagonal chieftains.</p>
+                  </div>
+              </div>
+               <div id="pop7" class="popbox panel panel-default">
+                  <div class="panel-heading">Clansman</div>
+                  <div class="panel-body">
+                    <p>To begin with a clansman may move two squares in an available direction, if it wishes. After thtat it may only move one square at a time in any direction. Clansman may only take other pieces by moving diagonally. When a clansman reaches the cauldron circle at the centre, it exchanges for any lost major piece, which re-incarnates through the Seannaiche's start square, when vacant.</p>
+                  </div>
+              </div> 
+            </div>   
+
+            <center><h3><a href="#" style="text-decoration:none;">The Spells</a></h3></center>
+            <div style="padding:10px;">
+              <h4 style="font-style:italic;">Hover over an item to see</h4>
+              <a href="#" class="popper" data-popbox="popa"><li>Mist</li></a> 
+              <a href="#" class="popper" data-popbox="popb"><li>Spellhammer</li></a> 
+              <a href="#" class="popper" data-popbox="popc"><li>The Dagda's Club</li></a> 
+              <a href="#" class="popper" data-popbox="popd"><li>The Dagda's Harp</li></a> 
+              <a href="#" class="popper" data-popbox="pope"><li>Shield</li></a> 
+              <a href="#" class="popper" data-popbox="popf"><li>Shape Shift</li></a> 
+              <a href="#" class="popper" data-popbox="popg"><li>Possession</li></a> 
+              <a href="#" class="popper" data-popbox="poph"><li>Flight</li></a> 
+              <a href="#" class="popper" data-popbox="popi"><li>The Cauldron</li></a>
+            </div>
+          </div>
+          <br/>
+          <h3>Play as..</h3>
+          <% if @game.black.nil? %>
+            <%= link_to "Black", {:controller => :games, 
+                                  :action => :play_as_black, 
+                                  :id => @game.id}, 
+                                  :method => :put, 
+                                  data: { confirm: "Are you sure?" }, 
+                                  :class => "btn btn-black color" %>
+          <% end %>
+          <% if @game.red.nil? %>
+            <% side_finder(@game.id.to_s,"player0") %>
+            <%= link_to "Red",  {:controller => :games, 
+                                 :action => :play_as_red, 
+                                 :id => @game.id}, 
+                                 :method => :put, 
+                                 data: { confirm: "Are you sure?" }, 
+                                 :class => "btn btn-danger color" %>
+          <% end %> 
+          <% if @game.white.nil? %>
+            <%= link_to "White", {:controller => :games, 
+                                  :action => :play_as_white, 
+                                  :id => @game.id}, 
+                                  :method => :put, 
+                                  data: { confirm: "Are you sure?" },
+                                  :class => "btn btn-default color" %>
+          <% end %>
+          <% if @game.green.nil? %>
+          <%= link_to "Green", {:controller => :games, 
+                                :action => :play_as_green, 
+                                :id => @game.id}, 
+                                :method => :put, 
+                                data: { confirm: "Are you sure?" }, 
+                                :class => "btn btn-success color" %>
+          <% end %>
+          <br/><br/>
+            <%= link_to image_tag("../images/shadow.jpg", :alt => "ShadowLand Games", :id => "logo") %>
+            <br/><br/>
+      </div>
+      <div class="right-group col-xs-10">
+          <div class="vertical-spells col-xs-1">
+            <button id="cauldron_button_1" title="Cauldron" onclick="cauldron_window()" disabled="true"></button>
+            <button id="shapeshift_button_1" title="Shapeshift" onclick="shapeshift()" disabled="true"></button> 
+            <button id="possess_button_1" title="Possession" onclick="possession()" disabled="true"></button>
+            <button id="flight_button_1" title="Flight" onclick="flight()" disabled="true"></button>
+            <button id="freeze_button_1" title="Dagda's Harp" onclick=select_freeze() disabled="true"></button>
+            <button id="bolt_button_1" title="Dagda's Club" onclick="zap_window()" disabled="true"></button>
+            <button id="mist_button_1" title="Mist" onclick="select_mist()"  disabled="true"></button>
+            <button id="hammer_button_1" title="Spellhammer (disabled)" disabled="true"></button>
+            <button id="shield_button_1" title="Shield" onclick="select_shield()" disabled="true"></button>
+          </div>
+          <%= render partial: "games/board" %>
+          <div class="vertical-spells col-xs-1">
+            <button id="cauldron_button_3" title="Cauldron" onclick="cauldron_window()" disabled="true"></button>
+            <button id="shapeshift_button_3" title="Shapeshift" onclick="shapeshift()" disabled="true"></button> 
+            <button id="possess_button_3" title="Possession" onclick="possession()" disabled="true"></button>
+            <button id="flight_button_3" title="Flight" onclick="flight()" disabled="true"></button>
+            <button id="freeze_button_3" title="Dagda's Harp" onclick="select_freeze()" disabled="true"></button>
+            <button id="bolt_button_3" title="Dagda's Club" onclick="zap_window()" disabled="true"></button>
+            <button id="mist_button_3" title="Mist" onclick="select_mist()"  disabled="true"></button>
+            <button id="hammer_button_3" title="Spellhammer (disabled)" disabled="true"></button>
+            <button id="shield_button_3" title="Shield" onclick="select_shield()" disabled="true"></button>
+          </div>
+        
+        <div class="chatbox col-xs-10 col-xs-push-1">
+          <h4>Chat box</h4>
+          <%= render "messages/index" %>
+        </div>
+      </div>
+    </div>
+          
+    <div class="game-footer row">
+      <div class="text-center">
+        &copy; Celtia 2014
+      </div>
+    </div>
+  </div>
+  
+  <div id="error" style="letter-spacing: 2px; background-color: #FEEFB3; border-radius: 0px;">Illegal move!</div>
+  <div class="promotion_window">
+    <p><strong>Choose a piece to promote to</strong></p>
+    <button id="bansidh_button" onclick="promote('B')"></button>
+    <button id="clansman_button" onclick="promote('P')"></button>
+    <button id="leapingchieftain_button" onclick="promote('L')"></button>
+    <button id="squarechieftain_button" onclick="promote('R')"></button>
+    <button id="diagonalchieftain_button" onclick="promote('D')"></button>
+    <button id="champion_button" onclick="promote('C')"></button>
+    <button id="closePromotion">X</button>
+  </div>
+  <div class="zap_window">
+    <p><strong>Choose an action</strong></p>
+    <button id="bolt_button" title="Dagda's Club (Kill)" onclick="select_zap()"></button>
+    <button id="bolt_button_res" title="Dagda's Club (Resurrect)" onclick="resurrect_window()"></button>
+  </div>
+  <div class="cauldron_window">
+    <p><strong>Choose an action</strong></p>
+    <button id="possession_button" title="Possession" onclick="possession()"></button>
+    <button id="flight_button" title="Flight" onclick="flight()"></button>
+    <button id="freeze_button" title="Dagda's Harp" onclick="select_freeze()"></button>
+    <button id="bolt_button" title="Dagda's Club" onclick="zap_window()"></button>
+    <button id="mist_button" title="Mist" onclick="select_mist()" ></button>
+    <button id="hammer_button" title="Spellhammer (disabled)"></button>
+    <button id="shield_button" title="Shield" onclick="select_shield()"></button>
+  </div>
+  
+<div id="promotion_window" title="Choose a piece to promote to">
+</div>
+<%= javascript_include_tag "waypoints.min", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "waypoints-sticky.min", "data-turbolinks-track" => true %>
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+    $('.indicator').waypoint('sticky', {
+      offset: -100
+    });
+  });
+
+</script>

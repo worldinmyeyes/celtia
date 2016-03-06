@@ -1,0 +1,20 @@
+<div class="container">
+	<ol class="breadcrumb">
+	    <li><a href="/">Home</a></li>
+	    <li class="active">Reset password</li>
+	  </ol>
+	<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+	<div class="panel-heading">Reset password</div>
+	<div class="panel-body">
+		<%= form_tag password_resets_path, :method => :post do %>
+		  <div class="form-group">
+		    <%= label_tag :email %>
+		    <%= text_field_tag :email, params[:email], :class => "form-control", :placeholder => 'Enter your email' %>
+		  </div>
+		  <p align="right"><%= submit_tag "Reset password", :class => "btn btn-success" %></p>
+		<% end %>
+	</div>
+	</div>
+	</div>
+</div>

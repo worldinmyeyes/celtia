@@ -1,0 +1,73 @@
+<style type="text/css">
+    .header a {
+        color:#ffffff;
+        /*font-size:10px;*/
+        text-decoration: none;
+        opacity: 0.7;
+        /*transition:opacity 0.2s;*/
+        &:hover {
+        opacity: 1;
+        color: #fff;
+        text-decoration: none;
+        }
+    }
+
+    .content {
+        display: block;
+        position: relative;
+        float: left;
+    }
+
+    body {
+        font-family: 'Open Sans', sans-serif !important;
+      font-weight: 400;
+      text-rendering: optimizelegibility;
+      background-color: #EDF5EB; 
+    }
+    .btn {
+        opacity: 1;
+    }
+    .alert {
+        text-align: left;
+    }
+</style>
+<div class="container">
+   <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li><%= link_to "Lobby", playerintro_path %></li>
+      <li><%= link_to @game_room.room_name, @game_room %></li>
+      <li class="active">Edit room details</li>
+    </ol>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+        <div class="panel-heading">Edit room</div>
+        <div class="panel-body">
+        <%= form_for @game_room do |f| %>
+                 <% if @game_room.errors.any? %>
+                 <div class="alert alert-error">
+                    <strong>Form is invalid</strong>
+                    <ul>
+                        <% @game_room.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                        <% end %>
+                    </ul>
+                </div>
+                <% end %>
+                
+                <div class = "form-group">
+                    <%= f.label :'Type a room name', :class => "control-label" %>
+                    <%= f.text_field :room_name, :placeholder => "Name of the room", :class => "form-control" %>
+                </div>
+                <div class = "form-group">
+                    <%= f.label :'Write a short profile', :class => "control-label" %>
+                    <%= f.text_area :profile, :placeholder => "Description", :class => "form-control", :rows => "5" %>
+                </div>
+                <p align="right">
+                <%= link_to "Cancel", @game_room, :class => "btn btn-default" %>
+                <%= f.submit 'Update', :class => "btn btn-success" %>
+                </p>
+        <% end %>
+        </div>
+        </div>
+    </div>
+</div>

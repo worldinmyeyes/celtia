@@ -1,0 +1,44 @@
+// Place all the styles related to the sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login{
+	text-align: center;
+}
+h1 {
+	color: #000;
+}
+body {
+	background-color: #EDF5EB;
+}
+
+  .input-field {
+    padding: 9px; 
+    border: 1px solid #b9b9b9;
+    outline: 0; 
+    width: 200px; 
+    /*background: #FFFFFF; */
+  }
+  input.btn_style {
+    padding: 9px;
+    outline: 0;  
+  background-color: #567E4A;
+  border: 1px solid #265218;
+  color: #fff;
+  width: 220px;
+}
+.btn_style:hover, .btn_style:focus {
+  background-color: #485e41;
+  text-decoration: none;
+  outline: 0;
+}
+
+.btn_style:active {
+  background: #265218;
+}
+
+.profilepic {
+  border-radius: 65px;
+  margin-bottom: 20px;
+  /*-webkit-transition: all .2s ease-in-out;*/
+}

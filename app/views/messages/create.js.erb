@@ -1,0 +1,5 @@
+<% publish_to "/messages/#{@message.game.id}" do %>
+  $("#chat").append("<%= j render(@message) %>");
+<% end %>
+
+

@@ -1,0 +1,206 @@
+<% provide(:lobby, 'active') %>
+<style type="text/css">
+	.header a {
+	    color:#ffffff;
+	    /*font-size:10px;*/
+	    text-decoration: none;
+	    opacity: 0.7;
+	    /*transition:opacity 0.2s;*/
+	    &:hover {
+	    opacity: 1;
+	    color: #fff;
+	    text-decoration: none;
+	    }
+	}
+
+	.content {
+		display: block;
+		position: relative;
+		float: left;
+	}
+
+	body {
+		font-family: 'Open Sans', sans-serif !important;
+	  font-weight: 400;
+	  text-rendering: optimizelegibility;
+	  background-color: #EDF5EB; 
+	}
+
+	ul {
+		list-style: none;
+		-webkit-padding-start: 0;
+		-moz-padding-start: 0;
+		padding-start: 0;
+	}
+	.btn {
+		opacity: 1;
+	}
+	#room-list {
+		max-height: 300px;
+		overflow: scroll;
+	}
+	.table>tbody>tr>td {
+		vertical-align: middle;
+	}
+</style>
+<div class = "container">
+	<ol class="breadcrumb">
+	  <li><a href="/">Home</a></li>
+	  <li class="active">Lobby</li>
+	</ol>
+	<h1>Lobby</h1>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Profile</div>
+				<div class="panel-body">
+					<ul>
+						<li><strong><%= current_player.username %></strong></li>
+						<li><span class="glyphicon glyphicon-star"></span> Rating: <strong><%= current_player.rating %></strong></li>
+						<li><span class="glyphicon glyphicon-stats"></span> Skill level: <strong><%= player_level %></strong></li>
+						<li><%= link_to edit_player_path(current_player) do %>
+							<span class="glyphicon glyphicon-cog"></span> Settings
+						<% end %>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Players Online:</div>
+				<div class="panel-body">
+					<ul>
+						<% @online_players.each do |player| %>
+						    <li><%= link_to player.username, player, :data => {:toggle => "tooltip", :placement => "right"}, :title => "View player's profile", :class => "online-players" %></li>
+						<% end %>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class = "col-md-9">
+			<div class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-tower"></span> Game Rooms</div>
+				<div class="panel-body">
+					<%= link_to games_path, :class => "btn btn-primary" do %>
+					   <span class="glyphicon glyphicon-eye-open"></span> View all games
+					<% end %>
+					<!-- Button trigger modal -->
+					<button class="btn btn-success" data-toggle="modal" data-target="#create-game-room">
+					  <span class="glyphicon glyphicon-plus-sign"></span> Create Game Room
+					</button>
+					<button class="btn btn-success" data-toggle="modal" data-target="#create-game">
+					  <span class="glyphicon glyphicon-plus-sign"></span> Create Game
+					</button>
+					
+					<%= form_for @game_room do |f| %>
+					<div class="modal fade" id="create-game-room" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Create Room</h4>
+					      </div>
+					      <div class="modal-body">
+							    <div class = "form-group">
+							    	<%= f.label :'Type a room name' %><br />
+							    	<%= f.text_field :room_name, :placeholder => "Name of the room", :class => "form-control" %>
+							    </div>
+							    <div class = "form-group">
+							    	<%= f.label :'Write a short profile' %><br />
+							    	<%= f.text_area :profile, :placeholder => "Description", :class => "form-control", :rows => "5" %>
+							    </div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					        <%= f.submit 'Create', :class => "btn btn-success" %>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<% end %>
+					<div class="modal fade" id="create-game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Create game</h4>
+					      </div>
+					      <div class="modal-body">
+					      	<div class="row">
+							    <div class="col-md-4 col-sm-4 text-center">
+								<%= link_to image_tag("2player.png", :width => "90%", :alt => "2 Players"), games_path(num_players: 2, owner: current_player.username), method: :post %>
+								<br/><br/>
+								<%= button_to games_path(num_players: 2, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+								    2 players
+								<% end %>
+								</div>
+								<div class="col-md-4 col-sm-4 text-center">
+								<%= link_to image_tag("4player.png", :width => "90%", :alt => "3 Players"), games_path(num_players: 3, owner: current_player.username), method: :post %>
+								<br/><br/>
+								<%= button_to games_path(num_players: 3, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+								    3 players
+								<% end %>
+								</div>
+								<div class="col-md-4 col-sm-4 text-center">
+								<%= link_to image_tag("4player.png", :width => "90%", :alt => "4 Players"), games_path(num_players: 4, owner: current_player.username), method: :post %>
+								<br/><br/>
+								<%= button_to games_path(num_players: 4, owner: current_player.username), method: :post, :class => "btn btn-success" do %>
+								    4 players
+								<% end %>
+								</div>
+							</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<br/>
+					<table class="table table-hover">
+						<tr>
+							<th>Room Name</th>
+							<th>Description</th>
+							<th>Owner</th>
+							<th></th>
+						</tr>
+						<% @game_rooms.each do |room| %>
+						<tr>
+							<td><%= room.room_name %></td>
+							<td><%= room.profile %></td>
+							<td><%= link_to room.player.username, room.player %></td>
+							<td class="text-nowrap">
+								<%= link_to room, :class => "btn btn-success" do %>
+									<span class="glyphicon glyphicon-log-in"></span> Enter
+								<% end %>
+								<% if room.owned_by?current_player %>
+									<%= link_to room, :class => "btn btn-danger", data: { confirm: 'Are you sure?'}, method: :delete do %>
+										<span class="glyphicon glyphicon-remove"></span> Delete
+									<% end %>
+								<% end %>
+							</td>
+						</tr>
+						<% end %>
+					</table>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> Global Chat</div>
+				<div class="panel-body">
+					<div class="chatbox">
+			          <%= render "messages/index_lobby" %>
+			        </div>
+				</div>
+			</div>
+		</div>
+		<div id = "dialog-confirm"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.online-players').tooltip();
+		$(document).on("click", ".sender", function(e) {
+	      document.getElementById("sendbody").value = "@"+$(this).html()+" ";
+	      $('#sendbody').focus();
+	    });
+	});
+</script>

@@ -1,0 +1,27 @@
+<script type="text/javascript">
+	$('.chatbox').bind("DOMSubtreeModified",function(){
+	  $("#chat").scrollTop($("#chat")[0].scrollHeight);
+	});
+</script>
+<ul id="chat">
+  <%= render @messages %>
+</ul>
+
+
+
+<%= form_for Message.new, remote: true, :html => {:class => "form-inline"} do |f| %>
+<div class="input-group">
+	<div class="form-group">
+		<%= f.text_field :body, :id => 'sendbody', :autocomplete => "off", :class => "form-control" %>
+		<%= f.hidden_field :player_id, :value => current_player.id %>
+		<%= f.hidden_field :game_id, :value => @game.id %>
+	</div>
+	<div class="input-group-btn">
+		<%= f.submit "Send", :class => "btn btn-default" %>
+	</div>
+</div>
+<% end %>          
+
+
+<%= subscribe_to "/messages/#{@game.id}"%>
+<%= subscribe_to "/messages/#{current_player.username}" %>
