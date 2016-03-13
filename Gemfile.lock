@@ -271,6 +271,7 @@ DEPENDENCIES
   pg (= 0.17)
   private_pub
   protected_attributes
+  pry
   rabl
   rails
   rails_12factor
