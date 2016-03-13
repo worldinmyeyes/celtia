@@ -1,0 +1,12 @@
+/home/worldinmyeyes/.rvm/rubies/ruby-2.2.4/bin/ruby -r ./siteconf20160313-25919-15xtzd0.rb extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+
+make "DESTDIR="
+compiling mapper.cpp
+compiling rubymain.cpp
+linking shared-object fastfilereaderext.so
+
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 fastfilereaderext.so ./.gem.20160313-25919-1ceh08y

@@ -11,6 +11,7 @@ gem 'celtia_rules_engine', '>= 0.1.37', :git => 'git@bitbucket.org:celtia/seanna
 gem 'rabl'
 gem 'oj'
 gem 'pry'
+gem 'responders', '~> 2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
