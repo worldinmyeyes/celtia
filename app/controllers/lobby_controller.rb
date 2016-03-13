@@ -6,7 +6,7 @@ class LobbyController < ApplicationController
   def show
     @players = Player.all
     @game_rooms = GameRoom.all
-    @online_players = Player.find :all#, :conditions => ["last_seen > ?", 5.minutes.ago.to_s(:db)]
+    @online_players = Player.find :all, :conditions => ["last_seen > ?", 5.minutes.ago.to_s(:db)]
     @game_room = GameRoom.new
     @messages = Message.where("game_id = ?", 0).limit(0).reverse
   end
