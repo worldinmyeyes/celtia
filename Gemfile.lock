@@ -5,7 +5,7 @@ GIT
     eventmachine (1.2.0.dev.2)
 
 GIT
-  remote: https://worldinmyeyes@bitbucket.org/celtia/seannaiche_rules_engine.git
+  remote: git@bitbucket.org:celtia/seannaiche_rules_engine.git
   revision: e756f48eb7470103fc9666f7cd1eba734a80e86e
   specs:
     celtia_rules_engine (0.1.37)
