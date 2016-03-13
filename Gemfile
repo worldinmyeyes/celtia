@@ -6,7 +6,7 @@ gem 'rails'
 gem 'eventmachine', '1.2.0.dev.2', :git => "git://github.com/eventmachine/eventmachine.git"
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'gon'
-gem 'celtia_rules_engine', '>= 0.1.37' , :path => 'vendor/celtia_rules_engine/'
+gem 'celtia_rules_engine', '>= 0.1.37', :git => 'https://worldinmyeyes@bitbucket.org/celtia/seannaiche_rules_engine.git'
 # gem 'celtia_rules_engine_colloque', '~> 0.1'
 gem 'rabl'
 gem 'oj'

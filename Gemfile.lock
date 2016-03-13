@@ -4,8 +4,9 @@ GIT
   specs:
     eventmachine (1.2.0.dev.2)
 
-PATH
-  remote: vendor/celtia_rules_engine/
+GIT
+  remote: https://worldinmyeyes@bitbucket.org/celtia/seannaiche_rules_engine.git
+  revision: e756f48eb7470103fc9666f7cd1eba734a80e86e
   specs:
     celtia_rules_engine (0.1.37)
 
@@ -248,6 +249,3 @@ DEPENDENCIES
   simple_form
   thin
   uglifier (>= 1.0.3)
-
-BUNDLED WITH
-   1.11.2
