@@ -1,0 +1,5 @@
+# Rails.application.config.assets.precompile += %w( bg1.png )
+# Rails.application.config.assets.precompile += %w( cauldron.png )
+# Rails.application.config.assets.precompile += %w( favicon.ico )
+# Rails.application.config.assets.precompile += %w( 2player.png )
+# Rails.application.config.assets.precompile += %w( 4player.png )

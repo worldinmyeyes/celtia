@@ -11,7 +11,8 @@ end
 
 module Celtia
   class Application < Rails::Application
-
+    config.assets.compile = true
+    
     config.assets.initialize_on_precompile = false
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -58,7 +59,9 @@ module Celtia
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
     #config.active_record.whitelist_attributes = true
-
+   #Rails.application.config.assets.precompile += %w( jquery-impromptu.min.js )
+    #config.assets.precompile = ['*.js', '*.css']
+    #config.assets.precompile += %w(.png)
     # Enable the asset pipeline
     config.assets.enabled = true
 

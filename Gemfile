@@ -1,17 +1,19 @@
 source 'https://rubygems.org'
-source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
+#source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
 
 #ruby "2.1.0"
 gem 'rails'
-gem 'eventmachine', '1.2.0.dev.2', :git => "git://github.com/eventmachine/eventmachine.git"
-gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'eventmachine'#, '1.2.0.dev.2', :git => "git://github.com/eventmachine/eventmachine.git"
+gem 'bcrypt-ruby'#, '~> 3.1.2'
 gem 'gon'
 gem 'celtia_rules_engine', '>= 0.1.37', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
 # gem 'celtia_rules_engine_colloque', '~> 0.1'
 gem 'rabl'
 gem 'oj'
 gem 'pry'
-gem 'responders', '~> 2.0'
+gem 'responders'
+gem 'sprockets', '3.3.3'
+gem 'sprockets-rails', '2.3.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -44,7 +46,7 @@ end
 # in production environments by default.
 
 group :assets do
-  gem 'sass',   '3.2.10'
+  gem 'sass'#,   '3.2.10'
   gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -52,7 +54,7 @@ group :assets do
 
   # Add these gems
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'#, '>= 1.0.3'
 
 end
 

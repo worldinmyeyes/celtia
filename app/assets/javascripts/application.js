@@ -13,4 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require private_pub
+// require backbone
 //= require_tree .
+// JS bundles
+//= link jquery-impromptu.min.js
+//= link_tree ../javascripts
+//
+// CSS bundles
+//= link_tree ../stylesheets
+//
+// Pull in all app/assets/images/ since app/views may link to them
+//= link_tree ../images
+// link ./../../images/Turn_black.png
