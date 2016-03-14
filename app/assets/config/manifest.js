@@ -2,7 +2,7 @@
 //
 // JS bundles
 // link ./../javascripts/application.js
-// link_directory ./javascripts/jquery-impromptu.min.js
+//= link_directory ../javascripts/jquery-impromptu.min.js
 //= link_tree ../javascripts
 //
 // CSS bundles
