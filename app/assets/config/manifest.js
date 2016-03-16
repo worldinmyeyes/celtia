@@ -1,5 +1,6 @@
 // manifest.js
 //
+//= require private_pub
 // JS bundles
 // link ./../javascripts/application.js
 //= link_directory ../javascripts/jquery-impromptu.min.js

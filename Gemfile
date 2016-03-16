@@ -1,7 +1,8 @@
-source 'https://rubygems.org'
-source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
-
 ruby "2.2.4"
+source 'https://rubygems.org'
+#source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
+
+
 gem 'rails'
 #gem 'eventmachine', '1.2.0.1', :git => "git://github.com/eventmachine/eventmachine.git"
 gem 'bcrypt-ruby'#, '~> 3.1.2'
@@ -37,7 +38,6 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-
 group :production do
 # do not touch this gem! it stays right here!
     gem 'rails_12factor'
@@ -65,5 +65,7 @@ gem 'simple_form'
 # gem 'debugger'
 
 gem 'thin'
+
+# uses faye for setting up server and enables chat between users
 gem 'private_pub'
 gem 'protected_attributes'
