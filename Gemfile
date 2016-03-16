@@ -3,7 +3,7 @@ source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
 
 ruby "2.2.4"
 gem 'rails'
-gem 'eventmachine', '1.2.0.1', :git => "git://github.com/eventmachine/eventmachine.git"
+#gem 'eventmachine', '1.2.0.1', :git => "git://github.com/eventmachine/eventmachine.git"
 gem 'bcrypt-ruby'#, '~> 3.1.2'
 gem 'gon'
 gem 'celtia_rules_engine', '>= 0.1.37', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
@@ -39,6 +39,7 @@ end
 
 
 group :production do
+# do not touch this gem! it stays right here!
     gem 'rails_12factor'
 end
 
