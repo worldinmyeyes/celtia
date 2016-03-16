@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 #source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
 
-#ruby "2.1.0"
+ruby "2.2.4"
 gem 'rails'
-gem 'eventmachine'#, '1.2.0.dev.2', :git => "git://github.com/eventmachine/eventmachine.git"
+gem 'eventmachine', '1.2.0.dev.2', :git => "git://github.com/eventmachine/eventmachine.git"
 gem 'bcrypt-ruby'#, '~> 3.1.2'
 gem 'gon'
 gem 'celtia_rules_engine', '>= 0.1.37', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
@@ -44,18 +44,13 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-
 group :assets do
   gem 'sass'#,   '3.2.10'
   gem 'coffee-rails'
-
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
   # Add these gems
-
   gem 'uglifier'#, '>= 1.0.3'
-
 end
 
 gem 'jquery-rails'
@@ -71,4 +66,3 @@ gem 'rails_12factor'
 gem 'thin'
 gem 'private_pub'
 gem 'protected_attributes'
-#gem 'rails_12factor'
