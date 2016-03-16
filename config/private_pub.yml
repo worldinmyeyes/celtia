@@ -5,7 +5,7 @@ test:
   server: "http://localhost:9292/faye"
   secret_token: "secret"
 production:
-  server: "http://celtiagame.herokuapp.com/faye"
-  secret_token: "de88ec264023dc167f35e453281f48908f18af9ec4302bd63e2b6ee7a09c86f1"
-  #secret_token: "6deb42ec75b5529aff3b7b2b50d83f32775a5d019a86a6caf763ab837d88223f"
+  server: "http://celtiaserver.herokuapp.com/faye"
+  #secret_token: "de88ec264023dc167f35e453281f48908f18af9ec4302bd63e2b6ee7a09c86f1"
+  secret_token: "6deb42ec75b5529aff3b7b2b50d83f32775a5d019a86a6caf763ab837d88223f"
   signature_expiration: 86400 # one hour
