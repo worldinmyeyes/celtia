@@ -11,7 +11,7 @@ module Engine
 
 class Game
   attr_reader :players, :board, :max_players, :turn_counter, :side_to_move, :game_id, :last_move_valid, :active, :last_player_killed, :result
-  attr_accessor :interactive_mode, :last_message, :colourised, :last_move_okay
+  attr_accessor :interactive_mode, :last_message, :colourised, :last_move_okay, :spell_list, :side_for_spells, :players
 
   @@DEFAULT_BOARD =
 "b2= = - - - - - - - - - s2* * b3
@@ -32,7 +32,7 @@ s1* * d - - - - - - - - d * * -
 b1* * s0- - - - - - - - - = = b0"
 
 # only capital letters and numbers are read, other characters are just to give a better sense of the board layout
-@@DEFAULT_PIECES = 
+@@DEFAULT_PIECES =
 "- * * B2R2L2D2C2C2D2L2R2S2* * -
 * * * * P2P2P2P2P2P2P2P2* * * *
 * * * * - - - - - - - - * * * *
@@ -128,24 +128,24 @@ b0* * s0- - - - - - - - - = = b0"
     @last_move_okay = true
     @message_log = []
     @last_player_killed = nil
-    
+
     # TODO: get the player names and colours from the command line
     0.upto(@max_players-1) do |i|
       @players.push(Player.new(i))
     end
-    
-    # sort the players on their assigned turn index, so they play in the correct order 
+
+    # sort the players on their assigned turn index, so they play in the correct order
     @players.sort!
     load_board(@@SQUARE_LAYOUTS[@max_players])
     load_pieces(@@LAYOUTS[@max_players])
     ready_for_move
   end
-  
+
   def load_board(layout)
     lines = layout.split("\n")
     @board = Board.new(lines, @players, @@CHAR_MAPPINGS, @colourised)
   end
-  
+
   #def find_square(x, y)
   #  0.upto(@width-1) do |i|
   #    0.upto(@height-1) do |j|
@@ -154,9 +154,9 @@ b0* * s0- - - - - - - - - = = b0"
   #      end
   #    end
   #  end
-  #  nil 
+  #  nil
   #end
- 
+
   def load_pieces(layout)
     lines = nil
     #begin
@@ -168,7 +168,7 @@ b0* * s0- - - - - - - - - = = b0"
     #end
     i = 0
     lines.each do |l|
-      
+
       # incrementing by 2 since characters are read in 2's
       (0...@board.width).to_a.each do |j|
         if @@PIECE_MAPPINGS.keys.include? l[2*j]
@@ -176,17 +176,17 @@ b0* * s0- - - - - - - - - = = b0"
           @piece_list.push(@board.find(i,j).piece)
         end
       end
-      
+
       i+=1
     end
   end
- 
+
   def load_pos(pos)
     pos.piece_dict.keys.each do |s|
       s.piece= pos.piece_dict[s]
     end
   end
-  
+
   # The reason this method prints directly is because it will also be responsible for changing the font colour, so players can be identified by their colour.  But it should also return the string it prints.
   def get_graphic(n=1, colourised=true)
     s = ""
@@ -219,7 +219,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     return s
   end
-  
+
   def place_piece(square, piece)
     if not piece.owner.piece_list.include? piece
       piece.owner.piece_list.push piece
@@ -231,7 +231,7 @@ b0* * s0- - - - - - - - - = = b0"
     piece.square= square
     square.piece= piece
   end
-  
+
   def unplace_piece(square, misted=false)
     if misted
       square.misted_piece.owner.piece_list.delete square.misted_piece
@@ -243,7 +243,7 @@ b0* * s0- - - - - - - - - = = b0"
       square.piece= nil
     end
   end
-  
+
   def move_piece(from, to, misted=false)
     p = nil
     if misted
@@ -257,7 +257,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     place_piece(to, p)
   end
-  
+
   def make_move(move)
     puts move if @interactive_mode
     # @message_log.push move.to_s
@@ -274,7 +274,6 @@ b0* * s0- - - - - - - - - = = b0"
       if p.square.equal?(@board.cauldron) and p.is_a?(Clansman) and not move.is_a?(PromoteMove)
         unplace_piece(p.square)
       end
-      #check if move.is_capture and move.captured_piece.
       if not move.player.waiting_pieces.empty? and move.from_square.is_a?(SeannaicheTempleSquare) and move.from_square.owner.equal?(move.player) and not move.player.mercenary
         r = move.player.waiting_pieces.shift
         place_piece(move.from_square, r)
@@ -285,11 +284,11 @@ b0* * s0- - - - - - - - - = = b0"
         owner.piece_list.clone.each do |q|
           q.mercenary= true
         end
-        
+
         owner.mercenary= true
         owner.active= false
         @last_player_killed = owner
-        
+
         in_prog = false
         @players.each do |s|
           next if s.equal?(move.player)
@@ -311,12 +310,14 @@ b0* * s0- - - - - - - - - = = b0"
         @result = "#{move.player} wins by capturing the cauldron."
         return
       end
-      
-      # if the piece has moved to a spell square, collect spells 
+
+      # if the piece has moved to a spell square, collect spells
       if p.collects_spells
         move.to_square.conferred_spells.each do |s|
           move.player.spells[s] = [1,p.owner.spells[s]+1].min
-          @message_log.push "#{p.owner.name} obtained the #{s.to_s} spell."
+          @spell_list = @players[side_to_move].spells
+          @side_for_spells = @players[side_to_move].turn_order
+          @message_log.push "#{p.owner.name} obtained the #{s.to_s} spell. #{@all_spells}"
         end
       end
       if move.instance_of? PromoteMove
@@ -325,9 +326,9 @@ b0* * s0- - - - - - - - - = = b0"
       end
       if move.possess_protect_move
         move.to_square.possess_protected= true
-        move.player.possess_protected_square = move.to_square 
+        move.player.possess_protected_square = move.to_square
       end
-      
+
     # possibility of moves that are both PieceMoves and SpellMoves?
     elsif move.class < SpellMove
       @message_log.push "The #{move.official_name} spell was invoked."
@@ -359,7 +360,7 @@ b0* * s0- - - - - - - - - = = b0"
         move.player.spells[:shapeshift] -= 1
       elsif move.is_a?(ShieldMove)
         @active_spells.push :shield
-        move.player.shielded_square= move.effect_square 
+        move.player.shielded_square= move.effect_square
         move.effect_square.shielded= move.player
         move.player.spells[:shield] -= 1
       elsif move.is_a?(CauldronMove)
@@ -371,7 +372,7 @@ b0* * s0- - - - - - - - - = = b0"
     next_turn(move.turn_cost)
     @move_list.push(move)
   end
-  
+
   def unmake_move(move=@move_list.last)
     p = move.to_square.piece
     p.moved= not(move.first_move)
@@ -389,7 +390,7 @@ b0* * s0- - - - - - - - - = = b0"
     @turn_counter -= move.turn_cost
     @move_list.delete(move)
   end
-  
+
   def get_moves(player, already_possessing=false, use_active_spells=true)
     # debugger if @turn_counter == 20
     generate_moves(player, already_possessing, false)
@@ -397,9 +398,9 @@ b0* * s0- - - - - - - - - = = b0"
     generate_moves(player, already_possessing, true) if not @active_spells.empty?
     player.non_spell_enabled_moves = nil
   end
-  
+
   def generate_moves(player, already_possessing, use_active_spells)
-    @active_spells_considered = [] 
+    @active_spells_considered = []
     if use_active_spells
       @active_spells_considered = @active_spells
     end
@@ -428,25 +429,16 @@ b0* * s0- - - - - - - - - = = b0"
         end
       end
       if player.spells[:mist] >= 1 || @active_spells_considered.include?(:cauldron)
-        # Woj Zscz: changed restriction of spell on all non-magic immune pieces
-        #@board.flattened.each do |s|
-        @piece_list.each do |p|
-          #if not s.magic_immune and s.occupied?
-          if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
-          #changed s to p.square
-            player.available_moves.push MistMove.new(p.square, player)
+        @board.flattened.each do |s|
+          if not s.magic_immune and s.occupied?
+            player.available_moves.push MistMove.new(s, player)
           end
         end
       end
-      if player.spells[:freeze] >= 1 || @active_spells_considered.include?(:cauldron)
-        # Woj Zscz: changed restriction of spell on all non-magic immune pieces
-        #@board.flattened.each do |s|
-        @piece_list.each do |p|
-          # if not s.magic_immune and not friendly_occupied?(s,player)
-          if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
-          # if p.square and p.square.occupied? 
-            #changed s to p.square
-            player.available_moves.push FreezeMove.new(p.square, player)
+        if player.spells[:freeze] >= 1 || @active_spells_considered.include?(:cauldron)
+        @board.flattened.each do |s|
+          if not s.magic_immune and not friendly_occupied?(s,player)
+            player.available_moves.push FreezeMove.new(s, player)
           end
         end
       end
@@ -497,7 +489,7 @@ b0* * s0- - - - - - - - - = = b0"
       player.non_spell_enabled_moves = player.available_moves.clone
     end
   end
-  
+
   # TODO: investigate why this is producing some duplicate moves
   def get_moves_piece(piece)
     w_old = Vector[piece.square.x, piece.square.y]
@@ -523,7 +515,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     piece.mov_vecs.each do |v|
       moves.concat iterate_move(v, w_old, piece, :move_or_cap)
-    end      
+    end
     if not piece.moves_same_as_cap
       piece.cap_vecs.each do |v|
         moves.concat iterate_move(v, w_old, piece, :normal_capture)
@@ -547,19 +539,18 @@ b0* * s0- - - - - - - - - = = b0"
     end
     return moves
   end
-  
+
   def friendly_occupied?(square, player)
     if square.piece
       return square.piece.owner == player
     end
     return false
   end
-  
+
   def side_to_move
     @turn_counter % @players.size
-    $turn_counter = @turn_counter % @players.size
   end
-  
+
   def iterate_move(v, w_old, piece, move_type)
     conditions = nil
     extends = nil
@@ -570,7 +561,7 @@ b0* * s0- - - - - - - - - = = b0"
       start_square = @board.find(w_old[0],w_old[1])
       end_square = @board.find(w[0],w[1])
       capture_condition = !(friendly_occupied?(end_square,piece.owner) || (!(end_square.piece.nil?) && end_square.piece.magic_immune && got_this_far_by_flight) || (!(end_square.piece.nil?) && end_square.shielded && !piece.owner.equal?(end_square.shielded)) || (!(end_square.piece.nil?) && end_square.possess_protected))
-      
+
       # either piece moves same as it captures, and we can add the move providing it isn't a capture of a friendly piece; or the square isn't occupied, so it doesn't matter whether piece moves same as it captures or not
       if move_type == :move_or_cap
         conditions = ((piece.moves_same_as_cap and capture_condition) or not end_square.occupied?)
@@ -582,7 +573,7 @@ b0* * s0- - - - - - - - - = = b0"
         conditions = ((piece.moves_same_as_cap and not friendly_occupied?(end_square,piece.owner)) or not end_square.occupied?)
         extend_condition = piece.extends_movement2
       end
-      if end_square.landable and conditions and not end_square.excluded.include?(piece.class) and (end_square.level - start_square.level).abs <= 1 and ((start_square.entering_level(2, end_square) == true and not piece.is_a?(Seannaiche)) or (start_square.entering_level(2, end_square) == true and piece.is_a?(Seannaiche) and piece.owner.spells[:hammer] >= 1) or start_square.entering_level(2, end_square) != true) and not @board.find(w[0], w[1]).frozen and not (piece.is_a?(Seannaiche) and (start_square.is_a?(SeannaicheTempleSquare) or end_square.is_a?(SeannaicheTempleSquare)) and start_square.dist_from(end_square) == 2) and not (start_square.level == 2 and end_square.level == 2 and start_square.dist_from(end_square) == 2)        
+      if end_square.landable and conditions and not end_square.excluded.include?(piece.class) and (end_square.level - start_square.level).abs <= 1 and ((start_square.entering_level(2, end_square) == true and not piece.is_a?(Seannaiche)) or (start_square.entering_level(2, end_square) == true and piece.is_a?(Seannaiche) and piece.owner.spells[:hammer] >= 1) or start_square.entering_level(2, end_square) != true) and not @board.find(w[0], w[1]).frozen and not (piece.is_a?(Seannaiche) and (start_square.is_a?(SeannaicheTempleSquare) or end_square.is_a?(SeannaicheTempleSquare)) and start_square.dist_from(end_square) == 2) and not (start_square.level == 2 and end_square.level == 2 and start_square.dist_from(end_square) == 2)
         pm = PieceMove.new(start_square, end_square, piece)
         # debugger if start_square.x == 15 and start_square.y == 6 and end_square.x == 14 and end_square.y == 5 and @turn_counter == 20 and start_square.piece.owner.non_spell_enabled_moves
         moves.push(pm) if not (not(end_square.piece.nil?) and end_square.piece.magic_immune and start_square.piece.owner.non_spell_enabled_moves and not start_square.piece.owner.non_spell_enabled_moves.find{|m| m.to_s == pm.to_s})
@@ -598,7 +589,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     return moves
   end
-  
+
   def display_moves
     require "set"
     l = @players[side_to_move].available_moves.map do |m|
@@ -607,7 +598,7 @@ b0* * s0- - - - - - - - - = = b0"
     l = l.to_set.to_a
     p l
   end
-  
+
   def match_move(move_type:, square1_x:nil, square1_y:nil, square2_x:nil, square2_y:nil, promotion_piece:nil, misted:false, player_name:nil)
     types = {0 => :normal, 1 => :mist, 2 => :bolt_kill, 3 => :freeze, 4 => :hammer, 5 => :possess, 6 => :shapeshift, 7 => :flight, 8 => :shield, 9 => :promote, 10 => :bolt_revive, 11 => :cauldron}
     s1 = nil
@@ -628,7 +619,7 @@ b0* * s0- - - - - - - - - = = b0"
           end
         else
           mist_condition = true
-        end 
+        end
         conditions = m.is_a?(PieceMove) && m.from_square.equal?(s1) && m.to_square.equal?(s2) && mist_condition
       when :bolt_kill
         conditions = m.is_a?(BoltKillMove) && m.effect_square.equal?(s1)
@@ -672,20 +663,17 @@ b0* * s0- - - - - - - - - = = b0"
     @message_log.push "Illegal move: #{move_type} #{square1_x} #{square1_y} #{square2_x} #{square2_y} #{promotion_piece}"
     @last_move_okay = false
   end
-  
+
   def to_move
     puts "#{@players[side_to_move].to_s.colorize(@players[side_to_move].color, @colourised)} to move."
     @message_log.push "#{@players[side_to_move].to_s.colorize(@players[side_to_move].color, @colourised)} to move."
-    puts $turn_counter.to_s
   end
-  
+
   def random_move
-    random = (@players[side_to_move].available_moves.length)
-    make_move(@players[side_to_move].available_moves[rand(random)])
-    #make_move(@players[side_to_move].available_moves.#)
+    make_move(@players[side_to_move].available_moves.sample)
     ready_for_move
   end
-  
+
   def ready_for_move
     if @active
       if @interactive_mode
@@ -700,23 +688,22 @@ b0* * s0- - - - - - - - - = = b0"
       if @interactive_mode
         puts "Game over: #{@result}"
       end
-      @message_log.push "Game over: #{@result}" 
+      @message_log.push "Game over: #{@result}"
     end
   end
-  
+
   def takeback
     unmake_move
     ready_for_move
   end
-  
+
   def get_move_list
     p @move_list
   end
-  
+
   def next_turn(n)
     if n>=1
       @turn_counter += n
-      
       @active_spells.clear
       @players[side_to_move].piece_list.each do |p|
         p.set_vecs
@@ -734,12 +721,12 @@ b0* * s0- - - - - - - - - = = b0"
       @turn_counter += 1
     end
   end
-  
+
   def can_cast_magic(player)
     s = player.find_piece(Seannaiche)
     return ((s and s.square.equal?(@board.cauldron)) or (player.piece_list.select{|p| p.is_a?(Bansidh) and p.square.is_a?(BansidhTempleSquare) and p.square.owner.equal?(player)}.size >= 1))
   end
-  
+
   def resurrect(player, piece)
     temple_square = @board.flattened.find{|s| s.class == SeannaicheTempleSquare and s.owner.equal?(player)}
     if temple_square.occupied?
@@ -748,7 +735,7 @@ b0* * s0- - - - - - - - - = = b0"
       place_piece(temple_square, piece)
     end
   end
-  
+
   def generate_promotions(type,piece=nil)
     @@PIECE_MAPPINGS.values.each do |q|
     r = @piece_list.find{|x| x.is_a?(q) and x.square.nil? and x.owner.equal?(piece.owner)}
@@ -757,12 +744,12 @@ b0* * s0- - - - - - - - - = = b0"
       end
     end
   end
-  
+
   def rotate_board
     @board_rotation = @board_rotation + 1 % 4
     get_graphic(@board_rotation, @colourised)
   end
-  
+
   def get_pos2
     l = []
     frontend_pieces = {Clansman => "1", Champion => "2", DiagonalChieftain => "3", LeapingChieftain => "4", SquareChieftain => "5", Seannaiche => "6", Bansidh => "7"}
@@ -774,25 +761,25 @@ b0* * s0- - - - - - - - - = = b0"
     end
     puts l.to_s
   end
-  
+
   def message_log_html
     s = StringIO.new
-    s << "<div id=\"message_div\">"
+    # s << "<ul id=\"chat\">"
     @message_log.each do |l|
-      s << "<div>" << l << "</div>"
+      s << "<li>" << l << "</li>"
     end
-    s << "</div>"
+    # s << "</ul>"
     s.string
   end
-  
+
   def moves_from_square(square)
     @players[@side_to_move].available_moves.select{|m| m.from_square.equal? square}
   end
-  
+
   def squares_reachable(square)
     moves_from_square(square).map{|m| m.to_square}
   end
-  
+
 end
 
 end

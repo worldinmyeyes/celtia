@@ -3,7 +3,7 @@ module Engine
 class Player
   attr_reader :turn_order, :pieces, :spells
   attr_accessor :available_moves, :piece_list, :active, :waiting_pieces, :shielded_square, :mercenary, :name, :possess_protected_square, :non_spell_enabled_moves
-  
+
   def initialize(turn_order, name=nil)
     if name
       @name = name
@@ -21,7 +21,7 @@ class Player
     @mercenary = false
     @non_spell_enabled_moves = nil
   end
-  
+
   def <=>(p)
     if @turn_order < p.turn_order
       return -1
@@ -30,29 +30,29 @@ class Player
     end
     return 0
   end
-  
+
   def add_to_piece_list(piece)
     @piece_list.push(piece)
   end
-  
+
   def color
     mappings = {0 => 31, 1 => 32, 2 => 33, 3 => 35}
     mappings[@turn_order]
   end
-  
+
   def find_piece(piece)
     #@piece_list.reject{|x| not(x.is_a?(piece))}.first
     @piece_list.find{|x| x.is_a?(piece)}
   end
-  
+
   def find_pieces(piece)
     @piece_list.select{|x| x.is_a?(piece)}
   end
-  
+
   def to_s
     @name
   end
-  
+
   # for the purposes of shapeshifting
   def make_piece_movs_bansidhs
     @piece_list.each do |p|
@@ -67,13 +67,13 @@ class Player
       p.extends_captures2 = false
     end
   end
-  
+
   def make_piece_movs_reset
     @piece_list.each do |p|
       p.set_vecs
     end
   end
-  
+
   def waiting_piece
     waiting_pieces.last
   end
