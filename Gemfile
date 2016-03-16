@@ -39,7 +39,7 @@ end
 
 
 group :production do
-    
+    gem 'rails_12factor'
 end
 
 # Gems used only for assets and not required
@@ -62,7 +62,7 @@ gem 'simple_form'
 
 # To use debugger
 # gem 'debugger'
-gem 'rails_12factor'
+
 gem 'thin'
 gem 'private_pub'
 gem 'protected_attributes'
