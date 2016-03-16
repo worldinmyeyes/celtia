@@ -119,18 +119,18 @@ class GamesController < ApplicationController
       @player_to_make_move = engine.games[engine.current_game].players[engine.games[engine.current_game].side_to_move].to_s
       PrivatePub.publish_to("/messages/#{@player_to_make_move}", "$('#chess_board').addClass('highlighted');")
       # ----------if a spell is collected, enable the spell button in corresponding player's spell rack------------        
-      if engine.games[engine.current_game].spell_list
-        # array for all spells
-        spells = [:flight, :mist, :possess, :freeze, :bolt, :cauldron, :hammer, :shield, :shapeshift]
-        # for each spell, if its value is 1 in spell_list array, meaning it is collected by player, enable the according button
-        spells.each do |s|
-          if engine.games[engine.current_game].spell_list[s] == 1
-            PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{engine.games[engine.current_game].side_for_spells}').removeAttr('disabled');")
-          else
-            PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{engine.games[engine.current_game].side_for_spells}').attr('disabled','disabled');")
-          end
-        end
-      end
+      # if engine.games[engine.current_game].spell_list == true
+      #   # array for all spells
+      #   spells = [:flight, :mist, :possess, :freeze, :bolt, :cauldron, :hammer, :shield, :shapeshift]
+      #   # for each spell, if its value is 1 in spell_list array, meaning it is collected by player, enable the according button
+      #   spells.each do |s|
+      #     if engine.games[engine.current_game].spell_list[s] == 1
+      #       PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{engine.games[engine.current_game].side_for_spells}').removeAttr('disabled');")
+      #     else
+      #       PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{engine.games[engine.current_game].side_for_spells}').attr('disabled','disabled');")
+      #     end
+      #   end
+      # end
     end
   end
   
