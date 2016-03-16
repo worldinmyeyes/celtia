@@ -67,7 +67,7 @@ gem 'simple_form'
 
 # To use debugger
 # gem 'debugger'
-
+gem 'rails_12factor'
 gem 'thin'
 gem 'private_pub'
 gem 'protected_attributes'
