@@ -391,7 +391,7 @@ function cauldron_window() {
             $(".cauldron_window").fadeIn();
         }
 }
-
+// Modified resurrect_window() and resurrect functions to enable correct fading out of prompt window divs.
 function resurrect_window() {
 	// $("#promotion_window").dialog({
  //                                modal: true,
@@ -405,6 +405,9 @@ function resurrect_window() {
  //                                        "id": "bansidh_button",
  //                                        click: function(){
  //                                                resurrect('B');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                },
  //                                {
@@ -412,6 +415,9 @@ function resurrect_window() {
  //                                        "id": "clansman_button",
  //                                        click: function(){
  //                                               resurrect('P');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                },
  //                                {
@@ -419,6 +425,9 @@ function resurrect_window() {
  //                                        "id": "champion_button",
  //                                        click: function(){
  //                                                resurrect('C');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                },
  //                                {
@@ -426,6 +435,9 @@ function resurrect_window() {
  //                                        "id": "leapingchieftain_button",
  //                                        click: function(){
  //                                                resurrect('L');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                },
  //                                {
@@ -433,6 +445,9 @@ function resurrect_window() {
  //                                        "id": "squarechieftain_button",
  //                                        click: function(){
  //                                                resurrect('R');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                },
  //                                {
@@ -440,6 +455,9 @@ function resurrect_window() {
  //                                        "id": "diagonalchieftain_button",
  //                                        click: function(){
  //                                               resurrect('D');
+ //                                                $(".zap_window").fadeOut();
+ //                                                $("#promotion_window").fadeOut();
+ //                                                $(".overlay").fadeOut();
  //                                        }
  //                                }]
 
@@ -447,19 +465,28 @@ function resurrect_window() {
 
             // $(".overlay").fadeIn();
             $(".zap_window").fadeOut();
-            $(".promotion_window").fadeIn();
+            $("#resurrection_window").fadeIn();
 
 }
 
 function resurrect(piece) {
   if (confirm("Are you sure?") == true) {
-  	var params = {"piece" : piece};
-  	var response = send_command("enginemoveresurrect", params);
-      if (response != "true"){
+  	 var params = {"piece" : piece};
+  	 var response = send_command("enginemoveresurrect", params);
+      if (response == "false"){
                   alert("Illegal move!");
                   return false;
-          }
+      }
+      $("#resurrection_window").fadeOut();
+  $(".promotion_window").fadeOut();
+  $(".zap_window").fadeOut();
+  $(".overlay").fadeOut();
+  REDIPS.drag.deleteObject(REDIPS.drag.obj);
+  $(this).dialog("close");
+  return true;
   }
+  
+  
 }
 
 function select_freeze(){
@@ -475,7 +502,7 @@ function select_freeze(){
 
 function select_zap(){
     $(".zap_window").fadeOut();
-    // $(".promotion_window").fadeOut();
+    $(".promotion_window").fadeOut();
     $(".overlay").fadeOut(function(){
     if (selected_spell != ZAP){
       selected_spell = ZAP;

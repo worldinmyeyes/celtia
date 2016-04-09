@@ -138,56 +138,70 @@ class GamesController < ApplicationController
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 9 #{params[:fromx]} #{params[:fromy]} #{params[:piece]}")
-    render text: engine.games[engine.current_game].last_move_okay  
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")  
   end
   
   def enginemoveshapeshift
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 6")
-    render text: engine.games[engine.current_game].last_move_okay  
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")  
   end
   
   def enginemovepossession
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 5")
-    render text: engine.games[engine.current_game].last_move_okay  
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")  
   end
   
   def enginemoveflight
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 7")
-    render text: engine.games[engine.current_game].last_move_okay  
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")  
   end
   
   def enginemoveresurrect
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 10 #{params[:piece]}")
-    render text: engine.games[engine.current_game].last_move_okay 
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});") 
   end
   
   def enginemovefreeze
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 3 #{params[:x]} #{params[:y]}")
-    render text: engine.games[engine.current_game].last_move_okay 
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
   
   def enginemovezap    
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 2 #{params[:x]} #{params[:y]}")
-    render text: engine.games[engine.current_game].last_move_okay 
+    render text: engine.games[engine.current_game].last_move_okay
+    # Enabled publishing (refreshing board) after casting the spell. Previously not present.
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
   
   def enginemoveshield
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
     engine.handle_line("move_special 8 #{params[:x]} #{params[:y]}")
-    render text: engine.games[engine.current_game].last_move_okay 
+    render text: engine.games[engine.current_game].last_move_okay
     PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
   

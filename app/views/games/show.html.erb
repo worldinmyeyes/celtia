@@ -130,6 +130,10 @@
           $(".promotion_window").fadeOut();
           $(".overlay").fadeOut();
       });
+    $("#closeResurrection").click(function() {
+          $("#resurrection_window").fadeOut();
+          $(".overlay").fadeOut();
+      });
     $(".overlay").click(function() {
           $(".zap_window").fadeOut();
           $(".cauldron_window").fadeOut();
@@ -455,8 +459,16 @@ $(function() {
     <button id="hammer_button" title="Spellhammer (disabled)"></button>
     <button id="shield_button" title="Shield" onclick="select_shield()"></button>
   </div>
-  
-<div id="promotion_window" title="Choose a piece to promote to">
+<!-- modified the div to use correct buttons without showing dialog windows and to enable correct closing -->
+<div class="promotion_window" id="resurrection_window" title="Choose a piece to resurrect">
+  <p><strong>Choose a piece to resurrect</strong></p>
+  <button id="bansidh_button" onclick="resurrect('B')"></button>
+    <button id="clansman_button" onclick="resurrect('P')"></button>
+    <button id="leapingchieftain_button" onclick="resurrect('L')"></button>
+    <button id="squarechieftain_button" onclick="resurrect('R')"></button>
+    <button id="diagonalchieftain_button" onclick="resurrect('D')"></button>
+    <button id="champion_button" onclick="resurrect('C')"></button>
+    <button id="closeResurrection">X</button>
 </div>
 <%= javascript_include_tag "waypoints.min", "data-turbolinks-track" => true %>
 <%= javascript_include_tag "waypoints-sticky.min", "data-turbolinks-track" => true %>
