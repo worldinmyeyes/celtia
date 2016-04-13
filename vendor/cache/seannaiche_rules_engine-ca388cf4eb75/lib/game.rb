@@ -1,6 +1,7 @@
 require "matrix"
 require "stringio"
 
+require 'pry'
 require_relative "piece"
 require_relative "square"
 require_relative "player"
@@ -279,29 +280,55 @@ b0* * s0- - - - - - - - - = = b0"
         place_piece(move.from_square, r)
         @message_log.push ("A #{r.class} was reincarnated.")
       end
-      if (move.is_capture and move.captured_piece.is_a? Seannaiche)
+      if (move.is_capture and move.captured_piece.is_a?(Seannaiche))
+        #WojZscz: the following 12 lines look for the Seannaiche start square of the captured S's owner 
         owner = move.captured_piece.owner
-        owner.piece_list.clone.each do |q|
-          q.mercenary= true
-        end
-
-        owner.mercenary= true
-        owner.active= false
-        @last_player_killed = owner
-
-        in_prog = false
-        @players.each do |s|
-          next if s.equal?(move.player)
-          if s.active
-            in_prog = true
-            break
+        s_temple_square = false
+        @o_temple_square = nil
+        #WojZscz: iterates through squares, finds the square and checks whether it is empty
+        board.squares.each do |s|
+          s.each do |r|
+            if r.is_a?(SeannaicheTempleSquare) and r.char == "s"
+              if r.owner == owner and not r.occupied?
+                s_temple_square = true
+                @o_temple_square = r
+              end
+            end
           end
         end
-        if not in_prog
-          @active = false
-          @message_log.push "#{move.player} wins by capturing all opposing Seannaiche's."
-          @result = "#{move.player} wins by capturing all opposing Seannaiche's."
-          return
+
+        # WojZscz: the following 4 lines check whether reincarnation of Seannaiche is possible when it's captured
+        if move.captured_piece.owner.spells[:cauldron] >= 1 and s_temple_square == true
+          # reincarnate Seannaiche
+          place_piece(@o_temple_square, move.captured_piece)
+          move.captured_piece.owner.spells[:cauldron] -= 1
+          @message_log.push "#{move.player}'s Seannaiche has been captured, but is restored with the use of the Cauldron spell."
+          @result = "#{move.player}'s Seannaiche has been captured, but is restored with the use of the Cauldron spell."
+        else
+          owner = move.captured_piece.owner
+          owner.piece_list.clone.each do |q|
+            q.mercenary= true
+          end
+
+          owner.mercenary= true
+          owner.active= false
+          @last_player_killed = owner
+
+          in_prog = false
+          @players.each do |s|
+            next if s.equal?(move.player)
+            if s.active
+              in_prog = true
+              break
+            end
+          end
+
+          if not in_prog
+            @active = false
+            @message_log.push "#{move.player} wins by capturing all opposing Seannaiche's."
+            @result = "#{move.player} wins by capturing all opposing Seannaiche's."
+            return
+          end
         end
       end
       if move.piece.is_a?(Seannaiche) and move.to_square.is_a?(SeannaicheTempleSquare) and move.player.spells[:cauldron] >= 1
@@ -329,40 +356,101 @@ b0* * s0- - - - - - - - - = = b0"
         move.player.possess_protected_square = move.to_square
       end
 
+      # added if-statement to correctly move shield with the shielded piece
+      if move.from_square == move.player.shielded_square
+        move.player.shielded_square = move.to_square
+        move.player.shielded_square.shielded= move.player
+      end
     # possibility of moves that are both PieceMoves and SpellMoves?
     elsif move.class < SpellMove
       @message_log.push "The #{move.official_name} spell was invoked."
       if move.is_a?(BoltKillMove)
         unplace_piece(move.effect_square)
-        move.player.spells[:bolt] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:bolt] -= 1
+        end
+
       elsif move.is_a?(BoltReviveMove)
         resurrect(move.player, move.promotion_piece)
-        move.player.spells[:bolt] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:bolt] -= 1
+        end
+
       elsif move.is_a?(MistMove)
         s = move.effect_square
         s.make_misted(friendly_occupied?(s, s.piece), move.player)
-        move.player.spells[:mist] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:mist] -= 1
+        end
+
       elsif move.is_a?(PossessMove)
         @active_spells.push :possess
-        move.player.spells[:possess] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:possess] -= 1
+        end
+
       elsif move.is_a?(FlightMove)
         @active_spells.push :flight
-        move.player.spells[:flight] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:flight] -= 1
+        end
+
       elsif move.is_a?(FreezeMove)
         s = move.effect_square
         s.frozen= true
         if s.piece
           move.effect_square.piece.active= false
         end
-        move.player.spells[:freeze] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:freeze] -= 1
+        end
+
       elsif move.is_a?(ShapeshiftMove)
         @active_spells.push :shapeshift
-        move.player.spells[:shapeshift] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:shapeshift] -= 1
+        end
+
       elsif move.is_a?(ShieldMove)
         @active_spells.push :shield
         move.player.shielded_square= move.effect_square
         move.effect_square.shielded= move.player
-        move.player.spells[:shield] -= 1
+        
+        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        if @active_spells_considered.include?(:cauldron)
+          move.player.spells[:cauldron] -= 1
+        else
+          move.player.spells[:shield] -= 1
+        end
+
       elsif move.is_a?(CauldronMove)
         @active_spells.push(:cauldron)
       end
@@ -417,7 +505,8 @@ b0* * s0- - - - - - - - - = = b0"
     if can_cast_magic(player)
       if player.spells[:bolt] >= 1
         @piece_list.each do |p|
-          if p.square and p.square.occupied? and not (friendly_occupied?(p.square, player) or p.magic_immune or p.square.magic_immune)
+          if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
+          # if p.square and p.square.occupied? and not (friendly_occupied?(p.square, player) or p.magic_immune or p.square.magic_immune)
             player.available_moves.push BoltKillMove.new(p.square, player)
           end
         end

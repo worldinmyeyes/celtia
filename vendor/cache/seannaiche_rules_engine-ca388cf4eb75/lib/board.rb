@@ -22,6 +22,10 @@ class Board
       raise "square not on board"
     end
   end
+
+  def squares
+    return @squares
+  end
   
   def load_squares(lines, players, mappings)
     @width = lines[0].size/2

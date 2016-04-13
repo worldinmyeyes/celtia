@@ -212,6 +212,15 @@ class GamesController < ApplicationController
     render text: engine.games[engine.current_game].last_move_okay 
     PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
+
+  def enginemovewildcard
+    @game = Game.find_by_id(params[:id])
+    engine = ObjectCache.find(@game.id.to_s)
+    engine.handle_line("move_special 11")
+    render text: engine.games[engine.current_game].last_move_okay 
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
+  end
+
   
   def current_side
     current_player.username

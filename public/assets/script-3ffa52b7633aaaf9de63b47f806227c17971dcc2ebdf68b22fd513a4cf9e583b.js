@@ -3,6 +3,7 @@
 
 
 /* enable strict mode */
+
 "use strict";
 
 var redipsInit;
@@ -120,26 +121,22 @@ redipsInit = function () {
       freeze(start_square);
       selected_spell = null;
       dragging = false;
-      //alert("Spell invoked! (Freeze)");
-      break;
+      //alert("Spell invoked!");
     case ZAP:
       zap(start_square);
       selected_spell = null;
       dragging = false;
-      alert("Spell invoked! (Zap)");
-      break;
+      alert("Spell invoked!");
     case SHIELD:
       shield(start_square);
       selected_spell = null;
       dragging = false;
-      alert("Spell invoked! (Shield)");
-      break;
+      alert("Spell invoked!");
     case MIST:
       mist(start_square);
       selected_spell = null;
       dragging = false;
-      alert("Spell invoked! (Mist)");
-      break;
+      alert("Spell invoked!");
     }
 	};
 	rd.event.moved  = function() {
@@ -391,12 +388,6 @@ function zap_window() {
 
 function cauldron_window() {
         if (confirm("Are you sure?") == true) {
-          var response = send_command("enginemovewildcard");
-          if (response=="true"){
-            alert("Wildcard activated!");
-          } else {
-            alert("Illegal move.");
-          }
           $(".overlay").fadeIn();
             $(".cauldron_window").fadeIn();
         }
@@ -516,8 +507,7 @@ function select_zap(){
     $(".overlay").fadeOut(function(){
     if (selected_spell != ZAP){
       selected_spell = ZAP;
-      //corrected alert
-      alert("Dagda's Club spell selected.  Click on a square to invoke.");
+      alert("Dagda's Harp spell selected.  Click on a square to invoke.");
     } else {
       selected_spell = null;
 
@@ -550,11 +540,9 @@ function select_mist(){
 function freeze(params){
         var response = send_command("enginemovefreeze", params);
         if (response=="true"){
-          alert("Spell invoked! (Freeze)");
+          engine_response = "Spell invoked"
         } else {
-          //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
-          engine_response = "Illegal move. (Freeze)"
+          engine_response = "Illegal move."
         }
 }
 
@@ -563,8 +551,6 @@ function zap(params){
         if (response=="true"){
 
         } else {
-          //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
           engine_response = "Illegal move."
         }
 }
@@ -574,8 +560,6 @@ function shield(params){
         if (response=="true"){
 
         } else {
-          //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
           engine_response = "Illegal move."
         }
 }
@@ -585,8 +569,6 @@ function mist(params){
         if (response=="true"){
 
         } else {
-          //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
           engine_response = "Illegal move."
         }
 }

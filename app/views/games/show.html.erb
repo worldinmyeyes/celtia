@@ -134,6 +134,14 @@
           $("#resurrection_window").fadeOut();
           $(".overlay").fadeOut();
       });
+    $("#closeWildcard").click(function() {
+          $(".cauldron_window").fadeOut();
+          $(".overlay").fadeOut();
+      });
+    $(".wildcard_button").click(function() {
+          $(".cauldron_window").fadeOut();
+          $(".overlay").fadeOut();
+      });
     $(".overlay").click(function() {
           $(".zap_window").fadeOut();
           $(".cauldron_window").fadeOut();
@@ -451,13 +459,16 @@ $(function() {
   </div>
   <div class="cauldron_window">
     <p><strong>Choose an action</strong></p>
-    <button id="possession_button" title="Possession" onclick="possession()"></button>
-    <button id="flight_button" title="Flight" onclick="flight()"></button>
-    <button id="freeze_button" title="Dagda's Harp" onclick="select_freeze()"></button>
-    <button id="bolt_button" title="Dagda's Club" onclick="zap_window()"></button>
-    <button id="mist_button" title="Mist" onclick="select_mist()" ></button>
-    <button id="hammer_button" title="Spellhammer (disabled)"></button>
-    <button id="shield_button" title="Shield" onclick="select_shield()"></button>
+    <!-- added missing shapeshift button and reordered buttons -->
+    <button id="shapeshift_button" class="wildcard_button" title="Shapeshift" onclick="shapeshift()"></button>
+    <button id="possess_button" class="wildcard_button" title="Possession" onclick="possession()"></button>
+    <button id="flight_button" class="wildcard_button" title="Flight" onclick="flight()"></button>
+    <button id="freeze_button" class="wildcard_button" title="Dagda's Harp" onclick="select_freeze()"></button>
+    <button id="bolt_button" class="wildcard_button" title="Dagda's Club" onclick="zap_window()"></button>
+    <button id="mist_button" class="wildcard_button" title="Mist" onclick="select_mist()" ></button>
+    <button id="hammer_button" class="wildcard_button" title="Spellhammer (disabled)"></button>
+    <button id="shield_button" class="wildcard_button" title="Shield" onclick="select_shield()"></button>
+    <button id="closeWildcard">X</button>
   </div>
 <!-- modified the div to use correct buttons without showing dialog windows and to enable correct closing -->
 <div class="promotion_window" id="resurrection_window" title="Choose a piece to resurrect">

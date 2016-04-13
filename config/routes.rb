@@ -28,6 +28,7 @@ Celtia::Application.routes.draw do
       post "command"
       post "enginemove2"
       post "enginemovepromote"
+      post "enginemovewildcard"
       post "enginemoveresurrect"
       post "enginemoveshapeshift"
       post "enginemovepossession"

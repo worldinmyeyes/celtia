@@ -333,31 +333,38 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
   background-image: url("../assets/white/diagonal.png");
 }
 
-#cauldron_button_0, #cauldron_button_1, #cauldron_button_2, #cauldron_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#cauldron_button, #cauldron_button_0, #cauldron_button_1, #cauldron_button_2, #cauldron_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/cauldron.png");
 }
-#shapeshift_button_0, #shapeshift_button_1, #shapeshift_button_2, #shapeshift_button_3 {
+
+<%#  added the first button id for correct display of button in prompts %>
+#shapeshift_button, #shapeshift_button_0, #shapeshift_button_1, #shapeshift_button_2, #shapeshift_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/shapeshift.png");
 }
 
-#possess_button_0, #possess_button_1, #possess_button_2, #possess_button_3  {
+<%#  added the first button id for correct display of button in prompts %>
+#possess_button, #possess_button_0, #possess_button_1, #possess_button_2, #possess_button_3  {
   @extend .promote_button;
   background-image: url("../assets/spells/possession.png");
 }
 
-#flight_button_0, #flight_button_1, #flight_button_2, #flight_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#flight_button, #flight_button_0, #flight_button_1, #flight_button_2, #flight_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/flight.png");
 }
 
-#freeze_button_0, #freeze_button_1, #freeze_button_2, #freeze_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#freeze_button, #freeze_button_0, #freeze_button_1, #freeze_button_2, #freeze_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/harp.png");
 }
 
-#bolt_button_0, #bolt_button_1, #bolt_button_2, #bolt_button_3 {
+<%# added the first button id for correct display of button in prompts %>
+#bolt_button, #bolt_button_0, #bolt_button_1, #bolt_button_2, #bolt_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/club.png");
 }
@@ -367,17 +374,20 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
   background-image: url("../assets/spells/club_res.png");
 }
 
-#mist_button_0, #mist_button_1, #mist_button_2, #mist_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#mist_button, #mist_button_0, #mist_button_1, #mist_button_2, #mist_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/mist.png");
 }
 
-#hammer_button_0, #hammer_button_1, #hammer_button_2, #hammer_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#hammer_button, #hammer_button_0, #hammer_button_1, #hammer_button_2, #hammer_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/spellhammer.png");
 }
 
-#shield_button_0, #shield_button_1, #shield_button_2, #shield_button_3 {
+<%#  added the first button id for correct display of button in prompts %>
+#shield_button, #shield_button_0, #shield_button_1, #shield_button_2, #shield_button_3 {
   @extend .promote_button;
   background-image: url("../assets/spells/shield.png");
 }
@@ -511,6 +521,12 @@ margin-top: 160px;
     color: #000;
 }
 .promotion_window #closePromotion {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.cauldron_window #closeWildcard {
     position: absolute;
     right: 0;
     top: 0;

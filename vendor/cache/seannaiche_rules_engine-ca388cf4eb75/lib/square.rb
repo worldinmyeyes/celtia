@@ -25,6 +25,10 @@ class Square
     @possess_protected = false
     @mist_spell_owner = nil
   end
+
+  def char
+    return @char
+  end
   
   def blocked?
     not (@landable or @passable)
