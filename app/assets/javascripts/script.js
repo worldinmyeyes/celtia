@@ -334,6 +334,23 @@ else if (window.attachEvent) {
 	window.attachEvent('onload', redipsInit);
 }
 
+function random_move(){
+          var response = send_command("random_move");
+          // if (response=="true"){
+          //   alert("Random move chosen");
+          // } else {
+          //   alert("Illegal move.");
+          // }
+}
+
+function use_ai(){
+          var response = send_command("use_ai");
+          // if (response=="true"){
+          //   alert("Random move chosen");
+          // } else {
+          //   alert("Illegal move.");
+          // }
+}
 
 function promote(piece){
         var params = {"fromx" : start_square["x"], "fromy" : start_square["y"], "piece" : piece};

@@ -37,6 +37,8 @@ Celtia::Application.routes.draw do
       post "enginemovezap"
       post "enginemoveshield"
       post "enginemovemist"
+      post "random_move"
+      post "use_ai"
       put "play_as_white"
       put "play_as_red"
       put "play_as_green"
