@@ -8,8 +8,8 @@ module Engine
 class CeltiaRulesEngine
 
   attr_accessor :games, :current_game
-
-  @@COMMANDS = ["new", "move", "display_moves", "to_move", "exit", "random_move", "interactive", "takeback", "move_special", "move_list", "save", "pass", "load_pos", "load", "rotate", "run_tests", "colour", "commands", "clear", "purge", "list_games", "list_spells", "get_pos2"].sort
+  # WojZscz: dded new commands: use_AI to be reachable from the command line
+  @@COMMANDS = ["new", "move", "display_moves", "to_move", "exit", "random_move", "interactive", "takeback", "move_special", "move_list", "save", "pass", "load_pos", "load", "rotate", "run_tests", "colour", "commands", "use_ai", "clear", "purge", "list_games", "list_spells", "get_pos2"].sort
   @@MAX_GAMES = 1024
   @@MAGIC_NUMBERS = {normal: 0, mist: 1, bolt_kill: 2, freeze: 3, hammer: 4, possess: 5, shapeshift: 6, flight: 7, shield: 8, promote: 9, bolt_revive: 10, cauldron: 11}
 
@@ -104,6 +104,9 @@ class CeltiaRulesEngine
     # TODO: user should be able to specify a move, but right now duplicate moves are generated (duplicates are only removed from the display_moves output, not the player's available moves)
     elsif s[0] =~ /^random_move$/i
       @games[@current_game].random_move
+    # WojZscz: added correct handling of dummy method for using AI
+    elsif s[0] =~ /^use_ai$/i
+      @games[@current_game].use_ai
     elsif s[0] =~ /^interactive$/i
       if Integer(s[1]) == 1
         @games[@current_game].interactive_mode= true

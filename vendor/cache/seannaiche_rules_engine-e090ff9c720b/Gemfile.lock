@@ -1,0 +1,68 @@
+GIT
+  remote: git@bitbucket.org:celtia/seannaiche_rules_engine.git
+  revision: ca388cf4eb755a99b3c7465e8b7730aec7e4ee3c
+  branch: master
+  specs:
+    celtia_rules_engine (0.1.45)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    byebug (8.2.4)
+    coderay (1.1.1)
+    daemons (1.2.3)
+    diff-lcs (1.2.5)
+    eventmachine (1.2.0.1)
+    method_source (0.8.2)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rake (11.1.2)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    sinatra (1.4.7)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    sinatra-cross_origin (0.3.2)
+    slop (3.6.0)
+    term-ansicolor (1.3.2)
+      tins (~> 1.0)
+    thin (1.6.4)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (~> 1.0)
+    tilt (2.0.2)
+    tins (1.10.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  byebug
+  celtia_rules_engine (>= 0.1.40)!
+  pry
+  rake
+  rspec
+  sinatra
+  sinatra-cross_origin
+  term-ansicolor
+  thin
+
+BUNDLED WITH
+   1.11.2

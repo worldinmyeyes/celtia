@@ -23,6 +23,7 @@ class Board
     end
   end
 
+  # WojZscz: added method returning the content of @squares which is referred to in some spells
   def squares
     return @squares
   end

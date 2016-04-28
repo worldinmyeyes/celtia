@@ -1,9 +1,9 @@
 GIT
   remote: git@bitbucket.org:celtia/seannaiche_rules_engine.git
-  revision: ca388cf4eb755a99b3c7465e8b7730aec7e4ee3c
+  revision: e090ff9c720b9dfd63680ebda53cd0aadf34a81c
   branch: master
   specs:
-    celtia_rules_engine (0.1.45)
+    celtia_rules_engine (0.1.46)
 
 GEM
   remote: https://rubygems.org/

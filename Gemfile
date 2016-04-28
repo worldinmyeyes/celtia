@@ -1,17 +1,22 @@
+# WojZscz: updated ruby version
 ruby "2.2.4"
 source 'https://rubygems.org'
 #source 'https://1ERqpyfzPh4snbEGJ1pb@gem.fury.io/gmckay/'
 
 
 gem 'rails'
+#  WojZscz: eventmachine gem turned off as manual generation was necessary
 #gem 'eventmachine', '1.2.0.1', :git => "git://github.com/eventmachine/eventmachine.git"
 gem 'bcrypt-ruby'#, '~> 3.1.2'
 gem 'gon'
+#  WojZscz: updated source for the gem repository - can be toggled between local repo and bitbucket repo
 gem 'celtia_rules_engine', '>= 0.1.40', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
-#gem 'celtia_rules_engine', '>= 0.1.37', :path => '/home/worldinmyeyes/Ruby/Celtia/seannaiche_rules_engine/'
+# gem 'celtia_rules_engine', '>= 0.1.37', :path => '/home/worldinmyeyes/Ruby/Celtia/seannaiche_rules_engine/'
 # gem 'celtia_rules_engine_colloque', '~> 0.1'
 gem 'rabl'
 gem 'oj'
+
+# WojZscz: added pry for easier implementation analysis
 gem 'pry'
 gem 'responders'
 gem 'sprockets', '3.3.3'
@@ -40,7 +45,7 @@ group :test do
 end
 
 group :production do
-# do not touch this gem! it stays right here!
+# WojZscz: this gem HAS to stay in production!
     gem 'rails_12factor'
 end
 
@@ -52,7 +57,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
   # Add these gems
-  gem 'uglifier'#, '>= 1.0.3'
+  gem 'uglifier'# WojZscz: version changed, '>= 1.0.3'
 end
 
 gem 'jquery-rails'
@@ -66,7 +71,6 @@ gem 'simple_form'
 # gem 'debugger'
 
 gem 'thin'
-
-# uses faye for setting up server and enables chat between users
+#  WojZscz: uses faye for setting up server and enables chat between users
 gem 'private_pub'
 gem 'protected_attributes'

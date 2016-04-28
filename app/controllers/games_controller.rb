@@ -213,6 +213,7 @@ class GamesController < ApplicationController
     PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
 
+  # WojZscz: added the method called by Javascript in views/games/show.html file. Refers the method in the celtia_rules_engine
   def enginemovewildcard
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)
@@ -221,6 +222,7 @@ class GamesController < ApplicationController
     PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
   
+# WojZscz: added two methods which are called by javascript and refer to two corresponding methods in the celtia_rules_engine
   def random_move
     @game = Game.find_by_id(params[:id])
     engine = ObjectCache.find(@game.id.to_s)

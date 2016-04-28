@@ -115,6 +115,7 @@ redipsInit = function () {
 		start_square = find_square(pos[1], pos[2]);
     dragging = true;
 
+    // WojZscz: Correct alerts put into different cases.
     switch (selected_spell){
     case FREEZE:
       freeze(start_square);
@@ -334,22 +335,23 @@ else if (window.attachEvent) {
 	window.attachEvent('onload', redipsInit);
 }
 
+// WojZscz: added random_move and use_ai functions to match the new buttons in the spells panel and methods in the engine
 function random_move(){
           var response = send_command("random_move");
-          // if (response=="true"){
-          //   alert("Random move chosen");
-          // } else {
-          //   alert("Illegal move.");
-          // }
+          if (response=="true"){
+            alert("Random move chosen");
+          } else {
+            alert("Illegal move.");
+          }
 }
 
 function use_ai(){
           var response = send_command("use_ai");
-          // if (response=="true"){
-          //   alert("Random move chosen");
-          // } else {
-          //   alert("Illegal move.");
-          // }
+          if (response=="true"){
+            alert("AI move chosen");
+          } else {
+            alert("Illegal move.");
+          }
 }
 
 function promote(piece){
@@ -406,6 +408,7 @@ function zap_window() {
         }
 }
 
+// WojZscz: Redesigned window for the wildcard Cauldron use.
 function cauldron_window() {
         if (confirm("Are you sure?") == true) {
           var response = send_command("enginemovewildcard");
@@ -496,6 +499,7 @@ function resurrect_window() {
 
 }
 
+// WojZscz: modified function to show correct pop-up window in show.html view for Dagdas Club spell
 function resurrect(piece) {
   if (confirm("Are you sure?") == true) {
   	 var params = {"piece" : piece};
@@ -512,8 +516,6 @@ function resurrect(piece) {
   $(this).dialog("close");
   return true;
   }
-  
-  
 }
 
 function select_freeze(){
@@ -533,11 +535,10 @@ function select_zap(){
     $(".overlay").fadeOut(function(){
     if (selected_spell != ZAP){
       selected_spell = ZAP;
-      //corrected alert
+      //WojZscz: corrected alert
       alert("Dagda's Club spell selected.  Click on a square to invoke.");
     } else {
       selected_spell = null;
-
     }
     });
 }
@@ -570,7 +571,7 @@ function freeze(params){
           alert("Spell invoked! (Freeze)");
         } else {
           //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
+          alert("Illegal move. (Freeze)");
           engine_response = "Illegal move. (Freeze)"
         }
 }
@@ -581,8 +582,8 @@ function zap(params){
 
         } else {
           //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
-          engine_response = "Illegal move."
+          alert("Illegal move. (Dagda's Club)");
+          engine_response = "Illegal move. (Dagda's Club)"
         }
 }
 
@@ -592,8 +593,8 @@ function shield(params){
 
         } else {
           //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
-          engine_response = "Illegal move."
+          alert("Illegal move. (Shield)");
+          engine_response = "Illegal move. (Shield)"
         }
 }
 
@@ -603,8 +604,8 @@ function mist(params){
 
         } else {
           //corrected alert to prevent confusion when illegal move made
-          alert("Illegal move.");
-          engine_response = "Illegal move."
+          alert("Illegal move. (Mist)");
+          engine_response = "Illegal move. (Mist)"
         }
 }
 

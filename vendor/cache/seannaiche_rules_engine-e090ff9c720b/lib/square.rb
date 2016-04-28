@@ -26,6 +26,7 @@ class Square
     @mist_spell_owner = nil
   end
 
+  # WojZscz: added char method for other classes to be able to return the character symbol of the square
   def char
     return @char
   end

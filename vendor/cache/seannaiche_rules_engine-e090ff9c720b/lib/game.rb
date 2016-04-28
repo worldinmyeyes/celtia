@@ -356,7 +356,7 @@ b0* * s0- - - - - - - - - = = b0"
         move.player.possess_protected_square = move.to_square
       end
 
-      # added if-statement to correctly move shield with the shielded piece
+      # WojZscz: added if-statement to correctly move shield protection with the shielded piece
       if move.from_square == move.player.shielded_square
         move.player.shielded_square = move.to_square
         move.player.shielded_square.shielded= move.player
@@ -366,8 +366,7 @@ b0* * s0- - - - - - - - - = = b0"
       @message_log.push "The #{move.official_name} spell was invoked."
       if move.is_a?(BoltKillMove)
         unplace_piece(move.effect_square)
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -376,8 +375,7 @@ b0* * s0- - - - - - - - - = = b0"
 
       elsif move.is_a?(BoltReviveMove)
         resurrect(move.player, move.promotion_piece)
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -387,8 +385,7 @@ b0* * s0- - - - - - - - - = = b0"
       elsif move.is_a?(MistMove)
         s = move.effect_square
         s.make_misted(friendly_occupied?(s, s.piece), move.player)
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -397,8 +394,7 @@ b0* * s0- - - - - - - - - = = b0"
 
       elsif move.is_a?(PossessMove)
         @active_spells.push :possess
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -407,8 +403,7 @@ b0* * s0- - - - - - - - - = = b0"
 
       elsif move.is_a?(FlightMove)
         @active_spells.push :flight
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -421,8 +416,7 @@ b0* * s0- - - - - - - - - = = b0"
         if s.piece
           move.effect_square.piece.active= false
         end
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -431,8 +425,7 @@ b0* * s0- - - - - - - - - = = b0"
 
       elsif move.is_a?(ShapeshiftMove)
         @active_spells.push :shapeshift
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -443,8 +436,7 @@ b0* * s0- - - - - - - - - = = b0"
         @active_spells.push :shield
         move.player.shielded_square= move.effect_square
         move.effect_square.shielded= move.player
-        
-        # added conditional to use cauldron if spell cast with a wildcard cauldron
+        # WojZscz: added conditional to use cauldron if spell cast with a wildcard cauldron
         if @active_spells_considered.include?(:cauldron)
           move.player.spells[:cauldron] -= 1
         else
@@ -505,8 +497,8 @@ b0* * s0- - - - - - - - - = = b0"
     if can_cast_magic(player)
       if player.spells[:bolt] >= 1
         @piece_list.each do |p|
+          # WojZscz: the condition in the following line was modified to disable casting Dagda's Club on magic immune pieces
           if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
-          # if p.square and p.square.occupied? and not (friendly_occupied?(p.square, player) or p.magic_immune or p.square.magic_immune)
             player.available_moves.push BoltKillMove.new(p.square, player)
           end
         end
@@ -519,7 +511,6 @@ b0* * s0- - - - - - - - - = = b0"
       end
       if player.spells[:mist] >= 1 || @active_spells_considered.include?(:cauldron)
         # Woj Zscz: changed restriction of spell on all non-magic immune pieces
-        #@board.flattened.each do |s|
         @piece_list.each do |p|
           #if not s.magic_immune and s.occupied?
           if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
@@ -530,11 +521,8 @@ b0* * s0- - - - - - - - - = = b0"
       end
       if player.spells[:freeze] >= 1 || @active_spells_considered.include?(:cauldron)
         # Woj Zscz: changed restriction of spell on all non-magic immune pieces
-        #@board.flattened.each do |s|
         @piece_list.each do |p|
-          # if not s.magic_immune and not friendly_occupied?(s,player)
           if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
-          # if p.square and p.square.occupied? 
             #changed s to p.square
             player.available_moves.push FreezeMove.new(p.square, player)
           end
@@ -695,6 +683,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     l = l.to_set.to_a
     p l
+    binding.pry
   end
 
   def match_move(move_type:, square1_x:nil, square1_y:nil, square2_x:nil, square2_y:nil, promotion_piece:nil, misted:false, player_name:nil)
@@ -769,6 +758,11 @@ b0* * s0- - - - - - - - - = = b0"
 
   def random_move
     make_move(@players[side_to_move].available_moves.sample)
+    ready_for_move
+  end
+
+  # WojZscz: added method invoked by the application to call AI engine - currently not used
+  def use_ai
     ready_for_move
   end
 

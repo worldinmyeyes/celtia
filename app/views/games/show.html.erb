@@ -130,6 +130,7 @@
           $(".promotion_window").fadeOut();
           $(".overlay").fadeOut();
       });
+    //WojZscz: the next three functions added to ensure corresponding windows turn off/on correctly.
     $("#closeResurrection").click(function() {
           $("#resurrection_window").fadeOut();
           $(".overlay").fadeOut();
@@ -472,8 +473,8 @@ $(function() {
   </div>
 <!-- modified the div to use correct buttons without showing dialog windows and to enable correct closing -->
 <div class="promotion_window" id="resurrection_window" title="Choose a piece to resurrect">
-  <p><strong>Choose a piece to resurrect</strong></p>
-  <button id="bansidh_button" onclick="resurrect('B')"></button>
+    <p><strong>Choose a piece to resurrect</strong></p>
+    <button id="bansidh_button" onclick="resurrect('B')"></button>
     <button id="clansman_button" onclick="resurrect('P')"></button>
     <button id="leapingchieftain_button" onclick="resurrect('L')"></button>
     <button id="squarechieftain_button" onclick="resurrect('R')"></button>
