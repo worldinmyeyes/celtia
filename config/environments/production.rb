@@ -72,13 +72,13 @@ Celtia::Application.configure do
     # end
   
     #... other config
-  config.action_mailer.default_url_options = { :host => "http://celtiademo.herokuapp.com" }
+  config.action_mailer.default_url_options = { :host => "http://celtiagame.herokuapp.com" }
   config.action_mailer.smtp_settings = {
     :address        => 'smtp.gmail.com',
     :port           => 587,
     :domain         => 'www.gmail.com',
     :authentication => :login,
-    :user_name      => 'teamceltia@gmail.com',
+    :user_name      => 'wojciechszczerek@gmail.com',
     :password       => 'teamceltia1'
   }
 

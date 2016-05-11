@@ -34,7 +34,6 @@ class GamesController < ApplicationController
       spells = [:flight, :mist, :possess, :freeze, :bolt, :cauldron, :hammer, :shield, :shapeshift]
       spells.each do |s|
         if i.spells[s] == 1
-          binding.pry
           PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{i.turn_order}').removeAttr('disabled');")
         else
           PrivatePub.publish_to("/games/#{@game.id}", "$('##{s}_button_#{i.turn_order}').attr('disabled','disabled');")
