@@ -1,0 +1,66 @@
+new
+move 15 12 15 15
+pass
+pass
+pass
+move 15 15 10 10
+pass
+pass
+pass
+move 10 10 9 10
+pass
+pass
+pass
+move 9 10 10 10
+pass
+pass
+pass
+move 10 10 15 15
+pass
+pass
+pass
+move_special_fail 3 15 3
+move_special 3 15 4
+pass
+pass
+pass
+
+move 15 15 10 10
+pass
+pass
+pass
+
+move 10 10 10 9
+pass
+pass
+pass
+
+move 10 9 10 8
+pass
+pass
+pass
+
+move 10 8 10 10
+pass
+pass
+pass
+
+move 10 10 15 15
+pass
+pass
+pass
+
+move 14 4 12 4
+pass
+pass
+pass
+
+move_special 7
+move_special 6
+display_moves
+move 15 3 13 5
+pass
+pass
+pass
+
+move_special_fail 3 13 5

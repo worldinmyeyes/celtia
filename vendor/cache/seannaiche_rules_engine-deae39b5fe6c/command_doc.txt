@@ -4,7 +4,7 @@ move <square1 x> <square1 y> <to-square x> <to-square y>
 
 Makes a normal (non-spell) move in the active game for the side to move.  This move is specified as two parameters corresponding to x and y coordinates of the square from which a piece should move, and two parameters corresponding to the x and y coordinates of the destination square.
 
-Note that coordinates are specified with respect to the top left corner of the board; this square being 0 0, and the square corresponding to the fifth row on the first column being 4 0.
+Note that coordinates are specified with respect to the top left corner of the board; this square being 0 0, and the square corresponding to the fifth row on the first column being 4 0. The Cauldron Temple square does not fit the grid and is assigned coordinates 16 16.
 
 In the case of a promotion, the promotion piece (piece to be revived) must be specified.  This is specified as a character corresponding to the piece:
 
@@ -15,27 +15,30 @@ L - Leaping Chieftain
 C - Champion
 B - Bansidh
 
-move-special <type> [<square1 x> <square1 y>] [<square2 x> <square2 y> <promotion-piece>] [<spell type>]
+move_special <type> [<square1 x> <square1 y>] [<square2 x> <square2 y> <promotion-piece>] [<spell type>]
 
 A more general version of the move command, for performing special (spell) moves.  It requires specifying the type of move:
 
-0 - normal
-1 - mist
-2 - bolt kill
-3 - freeze
-4 - spellhammer
-5 - possession
-6 - shapeshift
-7 - fly
-8 - shield
-9 - promotion
-10 - bolt revive
-11 - cauldron
+0 - normal piece move
+1 - Mist
+2 - Dagda's Club (Bolt Kill)
+3 - Dagda's Harp (Freeze)
+4 - Spellhammer (currently not working)
+5 - Possession
+6 - Shapeshift
+7 - Flight
+8 - Shield
+9 - Promotion (not a spell)
+10 - Dagda's Club (Resurrection)
+11 - Cauldron (Wildcard)
 
 0 specifies a normal piece movement or promotion.
 
 Move types 1-4 and 10 are spells that consume a whole turn.  Types 1-3 require specifying the square that the spell should act on.  Type 4 (spellhammer) requires specifying the spell that should be cancelled.
 
+move_special_fail <type> [<square1 x> <square1 y>] [<square2 x> <square2 y> <promotion-piece>] [<spell type>]
+
+To be used in test gams to prevent printing errors in logs.
 
 to_move
 
@@ -44,8 +47,7 @@ Prints a number corresponding to the player with the turn.
 
 exit
 
-Ends the game.
-
+Ends the application.
 
 random_move
 
@@ -57,7 +59,7 @@ Sets interactive mode.  When set to 1 (default), a text representation of the bo
 
 pass
 
-Skips this player's turn, and moves to next player's.
+Skips this player's turn and moves to next player's.
 
 move_list
 
@@ -83,8 +85,6 @@ save ./test/test_games/filename
 
 Save all the commands that were made in this game to the given file.
 
-save ./test/test_games/filename
-
-
+test ./test/test_games/filename
 
 See ./test/test_games  for some example games.

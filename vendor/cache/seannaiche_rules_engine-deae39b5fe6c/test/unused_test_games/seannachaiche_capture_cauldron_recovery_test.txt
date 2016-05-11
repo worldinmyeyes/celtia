@@ -1,3 +1,4 @@
+new
 move 15 12 15 15
 pass
 pass

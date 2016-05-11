@@ -521,10 +521,20 @@ b0* * s0- - - - - - - - - = = b0"
       end
       if player.spells[:freeze] >= 1 || @active_spells_considered.include?(:cauldron)
         # Woj Zscz: changed restriction of spell on all non-magic immune pieces
-        @piece_list.each do |p|
-          if (p.square && p.square.occupied? && p.magic_immune == false && p.square.magic_immune == false)
-            #changed s to p.square
-            player.available_moves.push FreezeMove.new(p.square, player)
+        # WojZscz: changed the loop to enable casting the spell on a square rather than a piece.
+        board.squares.each do |s|
+          s.each do |r|
+            if (r) 
+              if r.occupied? 
+                if r.piece.magic_immune == false && r.magic_immune == false
+                  player.available_moves.push FreezeMove.new(r, player)
+                else
+                end
+              elsif r.magic_immune == false
+                player.available_moves.push FreezeMove.new(r, player)
+              else
+              end
+            end
           end
         end
       end
@@ -683,7 +693,7 @@ b0* * s0- - - - - - - - - = = b0"
     end
     l = l.to_set.to_a
     p l
-    binding.pry
+    # binding.pry
   end
 
   def match_move(move_type:, square1_x:nil, square1_y:nil, square2_x:nil, square2_y:nil, promotion_piece:nil, misted:false, player_name:nil)

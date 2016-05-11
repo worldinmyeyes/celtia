@@ -1,0 +1,15 @@
+new
+move 15 12 15 15
+pass
+pass
+pass
+move 15 15 9 9 
+pass
+pass
+pass
+move 9 9 15 15
+pass
+pass
+pass
+move_special_fail 1 15 3
+move_special 1 15 4

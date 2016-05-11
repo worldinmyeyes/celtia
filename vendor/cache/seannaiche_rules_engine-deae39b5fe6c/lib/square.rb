@@ -38,6 +38,10 @@ class Square
   def occupied?
     @piece != nil
   end
+
+  def piece
+    return @piece
+  end
   
   def to_s
     if misted?

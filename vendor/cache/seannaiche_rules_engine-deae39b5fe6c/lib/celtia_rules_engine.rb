@@ -143,10 +143,10 @@ class CeltiaRulesEngine
       @games[@current_game].rotate_board
     elsif s[0] =~ /^run_tests$/i
       error_count = 0
-      f = File.open("./test/output.txt", "w")
+      f = File.open("../test/output.txt", "w")
       $stdout = f
-      g = File.open("./test/log.txt", "w")
-      Dir.glob("./test/test_games/*") do |path|
+      g = File.open("../test/log.txt", "w")
+      Dir.glob("../test/test_games/*") do |path|
         STDOUT.puts path
         h = File.open(path, "r")
         lines = h.readlines

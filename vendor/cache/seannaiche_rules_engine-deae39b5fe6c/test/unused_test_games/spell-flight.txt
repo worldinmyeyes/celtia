@@ -19,16 +19,21 @@ move_special 7
 
 move 15 7 8 0
 move 3 0 4 0
-pass
+move 0 12 0 11
 pass
 
-pass
+move 15 15 10 10
 move 4 0 4 1
-move 0 12 1 11
+move 0 11 1 11
 move 4 14 10 8
+
+move 10 10 15 15
+pass
+pass
+pass
 
 move_special 7
 
-move 15 4 2 4
-move 15 11 1 11
+move_special_fail 0 15 4 2 4
+move_special_fail 0 15 11 1 11
 move 15 8 1 8

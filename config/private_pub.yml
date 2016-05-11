@@ -7,4 +7,4 @@ test:
 production:
   server: "http://celtiaserver.herokuapp.com/faye"
   secret_token: "501ad5dd7eb0e70a9b5a154c8db7b38a22df7087ff895498539a774690403611"
-  signature_expiration: 3600 # one hour
+  signature_expiration: 86400 # one day

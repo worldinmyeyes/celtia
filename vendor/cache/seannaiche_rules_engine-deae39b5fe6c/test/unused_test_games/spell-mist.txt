@@ -3,7 +3,6 @@ move 15 12 15 15
 pass 
 pass 
 pass 
-move 15 12 9 9 
 move 15 15 9 9 
 pass 
 pass 

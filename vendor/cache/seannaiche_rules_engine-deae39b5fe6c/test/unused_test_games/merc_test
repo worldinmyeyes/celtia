@@ -7,6 +7,14 @@ move 11 14 11 12
 move 15 6 9 12
 pass
 pass
-move 12 15 11 14
+move 11 15 11 13
+pass
+pass
+pass
+move 12 15 11 15
+pass
+pass
+pass
+move 11 15 11 14
 move 9 12 11 14
 move 4 14 4 12

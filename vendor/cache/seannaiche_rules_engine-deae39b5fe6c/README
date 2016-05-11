@@ -13,30 +13,30 @@ Piece - Contains movement vectors and piece characteristics.
 
 ====== Build dependencies/Getting the code
 git
-ruby (1.9.3)
+ruby (2.2.4)
 
 1. On Linux:
 mkdir ~/celtia
 cd ~/celtia
 
 Windows:
-Create a new directory and navigate inside it.
+Create a new directory and navigate into it.
 
 2. Linux and Windows:
 
 git clone https://username@bitbucket.org/celtia/seannaiche_rules_engine.git
 
-where "username" is your Bitbucket account name.
+where "username" is the Bitbucket account name where celtia is stored.
 
 Note: Access to the Bitbucket repository (source hosting) is restricted, so without the appropriate permissions, this command won't work.
 
 3. Linux:
 
-cd seannaiche
+cd seannaiche_rules_engine
 
 Windows:
 
-Navigate to the newly created "seannaiche" directory.
+Navigate to the newly created "seannaiche_rule_engine" directory.
 
 4. Linux and Windows
 To start the engine:
@@ -59,41 +59,39 @@ See command_doc.txt
 
 To run the built-in test game suite:
 
-./bin/celtia_rules_engine   to start the engine.
-
-run_tests   at the prompt.  The engine plays through all the test games it finds in the ./test/test_games directory, and reports back the number of unexpected moves.  Note: moves that the engine should find to be illegal can be marked as such with the move_special_fail command, and these moves then not return errors in the run_tests error report.
-
+1. Open ./bin/celtia_rules_engine   to start the engine.
+2. Type run_tests at the prompt.
+The engine plays through all the test games it finds in the ./test/test_games directory, and reports back the number of unexpected moves. Note: moves that the engine should find to be illegal can be marked as such with the move_special_fail command, and these moves then do not return errors in the run_tests error report.
 
 ====== Supported Platforms
 
-Since the Ruby interpreter is cross-platform, it should be possible to run the engine on all platforms supported by Ruby.  It has been confirmed to work on Linux and Windows 7 (though colourisation currently doesn't work on Windows, so the first command issued on Windows should be  "colour 0").
-
+Since the Ruby interpreter is cross-platform, it should be possible to run the engine on all platforms supported by Ruby. It has been confirmed to work on Linux and Windows 7 - 10.
 
 ====== Known bugs and limitatations
 
-* Seannaiche's can get onto the second level of the hill without Spellhammer.
-* Not all spells are currently functional.  In particular, Shield and Spellhammer.
-* Text colourisation doesn't work on Windows.
+* Seannaiches can get onto the second level of the hill without Spellhammer (not confirmed).
+* Not all spells are currently fully functional - Mist and Spellhammer (Block).
 * Error handling is not pretty.
 * Requests are not restricted by domain, for debugging purposes.  Anyone can issue commands to the engine.
 * Takebacks are not functional for every move.  Takeback needs to be done with a more general approach.
-* Spell immunity work quite as it should.  Spells (such as Zap) cannot be cast directly on magic-immune squares or pieces, but spells can enable moves which allow capturing magic-immune pieces.
-
+* Does allow for any piece to enter Seannaiche and Banshee start squares, which should be restricted.
+ 
 ====== Features
 
 * Understands all piece movements and special rules, including:
 	- Promotions.
-	- Impassable squares, squares that can't be landed on, squares only passable to Bansidh, hill squares (constrained movement due to height), and temple squares.
+	- Impassable squares, squares that can't be landed on, squares only passable to Banshee, hill squares (constrained movement due to height) and Temple squares.
 	- The extra first move of the Clansman.
 	- The cauldron square.
 * Understands most spells:
-	- Zap (both to kill an enemy piece, and to revive a friendly piece)
+	- Zap (Bolt Kill and Resurrection)
 	- Mist
-	- Freeze
-	- Possess
+	- Dagda's Harp (Freeze)
+	- Possession
 	- Shapeshift
 	- Flight
-	- Cauldron
+	- Shield
+	- Cauldron (Wildard and Recovery)
 * Can be run as:
 	- a command-line program in a terminal, which prints a colourised text representation of the board after every move;
 	- a web server;

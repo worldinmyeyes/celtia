@@ -2,17 +2,16 @@ new
 move 15 12 15 15
 pass
 pass
-
 pass
 move 15 15 10 10
 pass
 pass
 pass
-move 10 10 10 7
+move 10 10 10 9
 pass
 pass
 pass
-move 10 7 10 10
+move 10 9 10 10
 pass
 pass
 pass
@@ -20,3 +19,5 @@ move 10 10 15 15
 pass
 pass
 pass
+move_special_fail 2 15 3
+move_special 2 15 4

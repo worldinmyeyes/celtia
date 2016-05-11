@@ -19,8 +19,17 @@ move 10 10 15 15
 pass
 pass
 pass
-move_special 3 9 12
+move 14 11 13 10
 pass
 pass
-move 9 14 9 12
+pass
+move_special 3 9 11
+pass
+pass
+pass
+move_special_fail 0 15 11 9 11
+pass
+pass
+pass
+move_special_fail 0 9 14 9 11
 move 9 14 9 13
