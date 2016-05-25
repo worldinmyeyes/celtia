@@ -132,6 +132,7 @@ class GamesController < ApplicationController
         end
       end
     end
+    PrivatePub.publish_to("/games/#{@game.id}", "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});")
   end
   
   def enginemovepromote
