@@ -109,7 +109,7 @@ class GamesController < ApplicationController
     engine.handle_line("move #{params[:fromx]} #{params[:fromy]} #{params[:tox]} #{params[:toy]} #{current_player.username}")
     render text: engine.games[engine.current_game].last_move_okay
     # ------------if last move was ok, publish a refresh trigger to every player in the same room so that every move is reflect in real time-----------
-    # if engine.games[engine.current_game].last_move_okay == true
+    if engine.games[engine.current_game].last_move_okay == true
       PrivatePub.publish_to("/games/#{@game.id}", 
         "$.ajax({type: 'GET',url: '/games/' + #{@game.id} + '.json',failure: function(msg) {alert('Request unsuccessful, check your internet connection.')},dataType: 'json',success: update});
         $('#chat').append('<li class=\"announcement\"><span class=\"sender\">#{current_player.username}</span> made a move!<span class=\"pull-right small text-muted\">#{DateTime.now.strftime("%H:%M")}</span></li>');
@@ -131,7 +131,7 @@ class GamesController < ApplicationController
           end
         end
       end
-    # end
+    end
   end
   
   def enginemovepromote
