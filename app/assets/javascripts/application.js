@@ -12,9 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require jquery.ui.draggable
-//= require jquery.turbolinks
 //= require private_pub
 // require backbone
 //= require_tree .
