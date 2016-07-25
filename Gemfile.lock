@@ -1,9 +1,9 @@
 GIT
   remote: git@bitbucket.org:celtia/seannaiche_rules_engine.git
-  revision: deae39b5fe6c2053c8f468578bf8d0196834c17f
+  revision: 9b2aa6192aead0f0c7678570225b439c496c13d7
   branch: master
   specs:
-    celtia_rules_engine (0.1.47)
+    celtia_rules_engine (0.1.50)
 
 GEM
   remote: https://rubygems.org/
@@ -254,7 +254,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
-  celtia_rules_engine (>= 0.1.46)!
+  celtia_rules_engine (>= 0.1.50)!
   coffee-rails
   factory_girl_rails
   gon

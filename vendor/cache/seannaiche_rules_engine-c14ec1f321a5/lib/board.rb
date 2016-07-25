@@ -49,7 +49,7 @@ class Board
         # Temple squares "s" and "b" on the board are treated differently, since they have owners.
         # That is, players who aren't the owner of the square can't be allowed to land on them.
         
-        if not (l[2*j] == "s" or l[2*j] == "b")
+        if not (l[2*j] == "s" or l[2*j] == "b" or l[2*j] == "e")
           @squares[i][j] = mappings[l[2*j]].new(i, j, @colourised) 
         else
           @squares[i][j] = mappings[l[2*j]].new(i, j, players[Integer(l[2*j+1])], @colourised)

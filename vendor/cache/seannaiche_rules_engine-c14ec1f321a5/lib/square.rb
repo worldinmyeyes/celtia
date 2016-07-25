@@ -167,6 +167,16 @@ class BansidhTempleSquare < Square
   end
 end
 
+class BansidhPretempleSquare < Square
+  def initialize(x,y,owner, colourised=true)
+    super(x,y,colourised)
+    @char = "e"
+    @passable = false
+    @excluded = [Champion, LeapingChieftain, SquareChieftain, DiagonalChieftain, Seannaiche, Clansman]
+    @owner = owner
+  end
+end
+
 class SeannaicheTempleSquare < Square
 def initialize(x,y,owner,colourised=true)
     super(x,y,colourised)

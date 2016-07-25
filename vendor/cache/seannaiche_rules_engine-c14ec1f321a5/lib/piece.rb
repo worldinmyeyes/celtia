@@ -58,10 +58,12 @@ class Piece
   
   def can_enter_cauldron
     extra_cond = true
-    if is_a? Seannaiche
-      extra_cond = @owner.spells[:hammer] >= 1
-    end
-    square.level == 2 and @type_enters_cauldron and extra_cond
+    # WojZscz: condition disabled as not valid (should be checked for level 1-to-level2 move instead)
+    # if is_a? Seannaiche
+    #   extra_cond = @owner.spells[:hammer] >= 0
+    # end
+    # puts square.level
+    # square.level == 0 and @type_enters_cauldron and extra_cond
   end
 end
 

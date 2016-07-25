@@ -10,7 +10,7 @@ gem 'rails'
 gem 'bcrypt-ruby'#, '~> 3.1.2'
 gem 'gon'
 #  WojZscz: updated source for the gem repository - can be toggled between local repo and bitbucket repo
-gem 'celtia_rules_engine', '>= 0.1.46', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
+gem 'celtia_rules_engine', '>= 0.1.50', :git => 'git@bitbucket.org:celtia/seannaiche_rules_engine.git', :branch => 'master'
 # gem 'celtia_rules_engine', '>= 0.1.37', :path => '/home/worldinmyeyes/Ruby/Celtia/seannaiche_rules_engine/'
 # gem 'celtia_rules_engine_colloque', '~> 0.1'
 gem 'rabl'

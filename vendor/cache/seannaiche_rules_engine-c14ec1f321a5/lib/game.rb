@@ -15,10 +15,10 @@ class Game
   attr_accessor :interactive_mode, :last_message, :colourised, :last_move_okay, :spell_list, :side_for_spells, :players
 
   @@DEFAULT_BOARD =
-"b2= = - - - - - - - - - s2* * b3
+"b2= = e2- - - - - - - - s2* * b3
 * = * * - - - - - - - - * * = =
 * * = * - - - - - - - - * = * =
-s1* * d - - - - - - - - d * * -
+s1* * d - - - - - - - - d * * e3
 - - - - h - - - - - - h - - - -
 - - - - - f z a p i f - - - - -
 - - - - - i m ' ' m z - - - - -
@@ -27,10 +27,10 @@ s1* * d - - - - - - - - d * * -
 - - - - - z m ' ' m i - - - - -
 - - - - - f i p a z f - - - - -
 - - - - h - - - - - - h - - - -
-- * * d - - - - - - - - d * * s3
+e1* * d - - - - - - - - d * * s3
 = * = * - - - - - - - - * = * *
 = = * * - - - - - - - - * * = *
-b1* * s0- - - - - - - - - = = b0"
+b1* * s0- - - - - - - - e0= = b0"
 
 # only capital letters and numbers are read, other characters are just to give a better sense of the board layout
 @@DEFAULT_PIECES =
@@ -88,10 +88,10 @@ B0* * - - - - - - - - - - * * -
 - * * S0R0L0D0C0C0D0L0R0B0* * -"
 
 @@TWO_PLAYER_SQUARES =
-"b1= = - - - - - - - - - s1* * b1
+"b1= = e1- - - - - - - - s1* * b1
 * = * * - - - - - - - - * * = =
 * * = * - - - - - - - - * = * =
-s0* * d - - - - - - - - d * * -
+s0* * d - - - - - - - - d * * e1
 - - - - h - - - - - - h - - - -
 - - - - - f z a p i f - - - - -
 - - - - - i m ' ' m z - - - - -
@@ -100,12 +100,12 @@ s0* * d - - - - - - - - d * * -
 - - - - - z m ' ' m i - - - - -
 - - - - - f i p a z f - - - - -
 - - - - h - - - - - - h - - - -
-- * * d - - - - - - - - d * * s1
+e0* * d - - - - - - - - d * * s1
 = * = * - - - - - - - - * = * *
 = = * * - - - - - - - - * * = *
-b0* * s0- - - - - - - - - = = b0"
+b0* * s0- - - - - - - - e0= = b0"
 
-@@CHAR_MAPPINGS = {"-" => NormalSquare, "=" => BansidhPassSquare, "*" => BlockedSquare, "b" => BansidhTempleSquare, "s" => SeannaicheTempleSquare, "d" => ShieldSquare, "h" => HammerSquare, "f" => FlightSquare, "i" => FreezeSquare, "m" => MistSquare, "p" => PossessSquare, "a" => ShapeshiftSquare, "z" => BoltSquare, "'" => Hill1Square, "+" => Hill2Square}
+@@CHAR_MAPPINGS = {"-" => NormalSquare, "=" => BansidhPassSquare, "*" => BlockedSquare, "b" => BansidhTempleSquare, "e" => BansidhPretempleSquare, "s" => SeannaicheTempleSquare, "d" => ShieldSquare, "h" => HammerSquare, "f" => FlightSquare, "i" => FreezeSquare, "m" => MistSquare, "p" => PossessSquare, "a" => ShapeshiftSquare, "z" => BoltSquare, "'" => Hill1Square, "+" => Hill2Square}
 @@PIECE_MAPPINGS = {"S" => Seannaiche, "R" => SquareChieftain, "L" => LeapingChieftain, "D" => DiagonalChieftain, "C" => Champion, "P" => Clansman, "B" => Bansidh}
 @@LAYOUTS = [nil, nil, @@TWO_PLAYERS, @THREE_PLAYERS, @@DEFAULT_PIECES]
 @@SQUARE_LAYOUTS = [nil, nil, @@TWO_PLAYER_SQUARES, @@DEFAULT_BOARD, @@DEFAULT_BOARD]
@@ -256,7 +256,7 @@ b0* * s0- - - - - - - - - = = b0"
     if not (misted and from.piece and (from.piece.owner.equal?(from.misted_piece.owner)))
       unplace_piece(from, misted)
     end
-    place_piece(to, p)
+      place_piece(to, p)
   end
 
   def make_move(move)
@@ -361,6 +361,19 @@ b0* * s0- - - - - - - - - = = b0"
         move.player.shielded_square = move.to_square
         move.player.shielded_square.shielded= move.player
       end
+
+      # WojZscz: added condition to use spellhammer when entering second level by Seannaiche
+      if move.from_square.level == 1 && move.to_square.level == 2 && move.piece.is_a?(Seannaiche)
+        if move.player.spells.include?(:hammer)
+          move.player.spells[:hammer] -= 1
+        end
+      end
+
+      if move.to_square.char == "e"
+        puts move.to_square.owner.name.to_s
+        puts move.piece.owner.to_s
+      end
+
     # possibility of moves that are both PieceMoves and SpellMoves?
     elsif move.class < SpellMove
       @message_log.push "The #{move.official_name} spell was invoked."
@@ -717,7 +730,21 @@ b0* * s0- - - - - - - - - = = b0"
         else
           mist_condition = true
         end
-        conditions = m.is_a?(PieceMove) && m.from_square.equal?(s1) && m.to_square.equal?(s2) && mist_condition
+        # WojZscz: this condition is only checked when the opponent's Banshidh is trying to enter our Banshidh Pretemple Square
+        ownership_condition = true
+        if m.is_a?(PieceMove)
+          if not (m.piece.is_a?(Bansidh) and m.piece.owner)
+            ownership_condition = true
+          else
+            if ((m.to_square.is_a?(BansidhPretempleSquare)) and (m.piece.owner != m.to_square.owner))
+              puts "case found"
+              ownership_condition = false
+            else
+              ownership_condition = true
+            end
+          end
+        end
+        conditions = m.is_a?(PieceMove) && m.from_square.equal?(s1) && m.to_square.equal?(s2) && mist_condition && ownership_condition
       when :bolt_kill
         conditions = m.is_a?(BoltKillMove) && m.effect_square.equal?(s1)
       when :promote
